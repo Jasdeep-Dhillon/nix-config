@@ -1,0 +1,40 @@
+{
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+
+    home-manager.url = "github:nix-community/home-manager";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    helium = {
+      url = "github:Jasdeep-Dhillon/helium-nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    run0-sudo-shim = {
+      url = "github:lordgrimmauld/run0-sudo-shim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    niri-flake.url = "github:sodiboo/niri-flake";
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs =
+    inputs:
+    let
+      inherit (inputs.nixpkgs) lib;
+      inherit (lib.fileset) toList fileFilter;
+      isNix = file: file.hasExt "nix" && file.name != "flake.nix" && !lib.hasPrefix "_" file.name;
+      importTree = path: toList (fileFilter isNix path);
+      mkFlake = inputs.flake-parts.lib.mkFlake { inherit inputs; };
+    in
+    mkFlake { imports = importTree ./.; };
+
+}

@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosModules.legion.power = {
+  flake.nixosModules.legionPower = {
     services.scx = {
       enable = true;
       scheduler = "scx_lavd";

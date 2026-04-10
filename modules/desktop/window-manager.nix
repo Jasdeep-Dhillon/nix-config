@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosModules.desktop =
+  flake.nixosModules.window-manager =
     { pkgs, ... }:
     {
 

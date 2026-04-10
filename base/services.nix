@@ -36,7 +36,10 @@
       settings = {
         splash = false;
         wallpaper = [
-          { path = ../wallpapers/96740776_p5.jpg; }
+          {
+            path = "${toString ./.}/wallpapers/96740776_p5.jpg";
+            monitor = "";
+          }
         ];
       };
     };

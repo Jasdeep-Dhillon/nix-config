@@ -2,20 +2,6 @@
 {
   flake.homeModules.shortcuts =
     { pkgs, lib, ... }:
-    let
-      inherit (lib) mergeAttrsList;
-      desktop = name: { ".local/share/applications/${name}".source = ../applications/${name}; };
-      icon = name: { ".local/share/icons/${name}".source = ../applications/${name}; };
-      desktopFiles = [
-        "Disconnect.desktop"
-        "VPNConnect.desktop"
-        "Windows.desktop"
-      ];
-      iconFiles = [
-        "openvpn.png"
-        "windows.ico"
-      ];
-    in
     {
       xdg.desktopEntries = {
         "windows" = {

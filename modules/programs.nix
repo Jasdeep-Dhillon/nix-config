@@ -14,35 +14,200 @@
           theme = "Catppuccin Mocha";
         };
       };
+      environment.shells = [ pkgs.nushell ];
+    };
+
+  flake.homeModules.programs =
+    { pkgs, lib, ... }:
+    {
+      programs.fastfetch = {
+        enable = true;
+        settings = {
+          logo = {
+            type = "auto";
+            source = "~/.config/fastfetch/nekoarc.png";
+            width = 35;
+            height = 20;
+          };
+          display = {
+            seperator = "->";
+            color = {
+              keys = "blue";
+            };
+            key = {
+              width = 6;
+              type = "icon";
+            };
+          };
+          modules = [
+            "title"
+            "seperator"
+            {
+              type = "os";
+              format = "{name} {version}";
+            }
+            {
+              type = "host";
+              format = "{family}";
+            }
+            "kernel"
+            "packages"
+            "shell"
+            "de"
+            "wm"
+            "terminal"
+            "separator"
+            {
+              type = "cpu";
+              format = "{name} ({cores-physical} Cores/{cores-logical} Threads)";
+            }
+            "gpu"
+            "memory"
+            "swap"
+            "disk"
+            "separator"
+            "localip"
+            "battery"
+            "poweradapter"
+          ];
+        };
+      };
+      programs.kitty = {
+        enable = true;
+        settings = {
+          detect_urls = "yes";
+          copy_on_select = "yes";
+          cursor_shape = "beam";
+          cursor_shape_unfocused = "unchanged";
+          confirm_os_window_close = 0;
+          open_url_with = "default";
+          underline_hyperlinks = "always";
+          strip_trailing_spaces = "smart";
+          window_margin_width = 4;
+          mouse_map = "middle release ungrabbed paste_from_selection";
+        };
+      };
+      programs.mangohud = {
+        enable = true;
+        settings = {
+          gpu_stats = true;
+          gpu_temp = true;
+          # gpu_core_clock
+          # gpu_mem_temp
+          # gpu_mem_clock
+          # gpu_power
+          # gpu_power_limit
+          # cpu_temp
+          # cpu_power
+          # cpu_mhz
+          # vram
+          # ram
+          # fps
+          # frametime
+          # throttling_status
+          # gpu_name
+          # vulkan_driver
+          # wine
+          # winesync
+          # frame_timing
+          # gamemode
+          # text_outline
+          # hud_no_margin
+          # hud_compact
+          # font_size = 20
+          # width = 325
+          # table-columns = 5
+          # background_alpha = 0.2
+          # pci_dev = \0000:01:00.0\
+          # toggle_hud = \Shift_L+F12\
+          # toggle_hud = \Shift_R+F12\
+        };
+      };
+      programs.mpv = {
+        enable = true;
+        config = {
+          geometry = "50%:50%";
+          autofit-larger = "100%x99%";
+          force-window = "immediate";
+          profile = "high-quality";
+          hwdec = "auto";
+          slang = "en";
+          border = "no";
+          save-position-on-quit = true;
+          keep-open = true;
+          keepaspect-window = "no";
+          screenshot-directory = "~/Pictures/MPV-Screenshots";
+          screenshot-template = "%F %p";
+        };
+        extraInput = ''
+          [ add speed -0.25
+          ] add speed 0.25
+          4 ignore
+          5 ignore
+          6 ignore
+          7 ignore
+          8 ignore
+          9 ignore
+          0 ignore
+          1 cycle sub down                            # switch subtitle track
+          2 cycle sub                                 # switch subtitle track backwards
+          3 cycle audio
+          ESC set fullscreen no
+          v ignore
+          / ignore
+          w ignore
+          e ignore
+          p ignore
+          j ignore
+          J ignore
+          WHEEL_UP      add volume 5
+          WHEEL_DOWN    add volume -5
+          =      add volume 5
+          -   add volume -5
+          i script-binding stats/display-stats-toggle
+          RIGHT seek  10                           # seek 5 seconds forward
+          LEFT  seek -10
+          b   playlist-prev                        # skip to the previous file
+          n playlist-next                          # skip to the next file
+        '';
+        scripts = with pkgs.mpvScripts; [
+          pkgs.mpvScripts.builtins.autoload
+          sponsorblock-minimal
+          modernz
+          youtube-chat
+          twitch-chat
+          eisa01.smart-copy-paste-2
+        ];
+      };
       programs.starship = {
         enable = true;
         settings = {
-          palette = "catppuccin_mocha";
-          format = ''
-            $directory\
-            $git_branch\
-            $git_state\
-            $git_status\
-            $fill\
-            $bun\
-            $c\
-            $elixir\
-            $elm\
-            $golang\
-            $gradle\
-            $haskell\
-            $java\
-            $julia\
-            $nodejs\
-            $nim\
-            $rust\
-            $scala\
-            $python\
-            $nix_shell\
-            $time\
-            $cmd_duration
-            $character
-          '';
+          palette = lib.mkDefault "catppuccin_mocha";
+          format = lib.concatStrings [
+            "$directory"
+            "$git_branch"
+            "$git_state"
+            "$git_status"
+            "$fill"
+            "$bun"
+            "$c"
+            "$elixir"
+            "$elm"
+            "$golang"
+            "$gradle"
+            "$haskell"
+            "$java"
+            "$julia"
+            "$nodejs"
+            "$nim"
+            "$rust"
+            "$scala"
+            "$python"
+            "$nix_shell"
+            "$time"
+            "$cmd_duration"
+            "\n$character"
+          ];
           right_format = "";
           add_newline = false;
           directory = {
@@ -208,171 +373,6 @@
           };
         };
       };
-      environment.shells = [ pkgs.nushell ];
-    };
-
-  flake.homeModules.programs =
-    { pkgs, ... }:
-    {
-      programs.fastfetch = {
-        enable = true;
-        settings = {
-          logo = {
-            type = "auto";
-            source = "~/.config/fastfetch/nekoarc.png";
-            width = 35;
-            height = 20;
-          };
-          display = {
-            seperator = "->";
-            color = {
-              keys = "blue";
-            };
-            key = {
-              width = 6;
-              type = "icon";
-            };
-          };
-          modules = [
-            "title"
-            "seperator"
-            {
-              type = "os";
-              format = "{name} {version}";
-            }
-            {
-              type = "host";
-              format = "{family}";
-            }
-            "kernel"
-            "packages"
-            "shell"
-            "de"
-            "wm"
-            "terminal"
-            "separator"
-            {
-              type = "cpu";
-              format = "{name} ({cores-physical} Cores/{cores-logical} Threads)";
-            }
-            "gpu"
-            "memory"
-            "swap"
-            "disk"
-            "separator"
-            "localip"
-            "battery"
-            "poweradapter"
-          ];
-        };
-      };
-      programs.kitty = {
-        enable = true;
-        settings = {
-          detect_urls = "yes";
-          copy_on_select = "yes";
-          cursor_shape = "beam";
-          cursor_shape_unfocused = "unchanged";
-          confirm_os_window_close = 0;
-          open_url_with = "default";
-          underline_hyperlinks = "always";
-          strip_trailing_spaces = "smart";
-          window_margin_width = 4;
-          mouse_map = "middle release ungrabbed paste_from_selection";
-        };
-      };
-      programs.mangohud = {
-        enable = true;
-        settings = [
-          "gpu_stats"
-          "gpu_temp"
-          "gpu_core_clock"
-          "gpu_mem_temp"
-          "gpu_mem_clock"
-          "gpu_power"
-          "gpu_power_limit"
-          "cpu_temp"
-          "cpu_power"
-          "cpu_mhz"
-          "vram"
-          "ram"
-          "fps"
-          "frametime"
-          "throttling_status"
-          "gpu_name"
-          "vulkan_driver"
-          "wine"
-          "winesync"
-          "frame_timing"
-          "gamemode"
-          "text_outline"
-          "hud_no_margin"
-          "hud_compact"
-          { font_size = 20; }
-          { width = 325; }
-          { table-columns = 5; }
-          { background_alpha = 0.2; }
-          { pci_dev = "0000:01:00.0"; }
-          { toggle_hud = "Shift_L+F12"; }
-          { toggle_hud = "Shift_R+F12"; }
-        ];
-      };
-      programs.mpv = {
-        enable = true;
-        config = {
-          geometry = "50%:50%";
-          autofit-larger = "100%x99%";
-          force-window = "immediate";
-          profile = "high-quality";
-          hwdec = "auto";
-          slang = "en";
-          border = "no";
-          save-position-on-quit = true;
-          keep-open = true;
-          keepaspect-window = "no";
-          screenshot-directory = "~/Pictures/MPV-Screenshots";
-          screenshot-template = "%F %p";
-        };
-        extraInput = ''
-          [ add speed -0.25
-          ] add speed 0.25
-          4 ignore
-          5 ignore
-          6 ignore
-          7 ignore
-          8 ignore
-          9 ignore
-          0 ignore
-          1 cycle sub down                            # switch subtitle track
-          2 cycle sub                                 # switch subtitle track backwards
-          3 cycle audio
-          ESC set fullscreen no
-          v ignore
-          / ignore
-          w ignore
-          e ignore
-          p ignore
-          j ignore
-          J ignore
-          WHEEL_UP      add volume 5
-          WHEEL_DOWN    add volume -5
-          =      add volume 5
-          -   add volume -5
-          i script-binding stats/display-stats-toggle
-          RIGHT seek  10                           # seek 5 seconds forward
-          LEFT  seek -10
-          b   playlist-prev                        # skip to the previous file
-          n playlist-next                          # skip to the next file
-        '';
-        scripts = with pkgs.mpvScripts; [
-          pkgs.mpvScripts.builtins.autoload
-          sponsorblock-minimal
-          modernz
-          youtube-chat
-          twitch-chat
-          eisa01.smart-copy-paste-2
-        ];
-      };
       programs.nushell = {
         enable = true;
         settings = {
@@ -389,7 +389,8 @@
           nixos = "cd /media/Storage/Projects/nix-config";
           projects = "cd /media/Storage/Projects";
         };
-        # Carapace & Starship nushell modules
+
+        # Carapace & Starship module
         extraConfig = ''
           $env.PATH = ($env.PATH | split row (char esep) | where { $in != "/home/arc/.config/carapace/bin" } | prepend "/home/arc/.config/carapace/bin")
 

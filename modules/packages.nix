@@ -10,7 +10,6 @@
         imagemagick
         uutils-coreutils-noprefix
         bottom
-        fastfetch
         eza
         zoxide
         dua
@@ -25,6 +24,7 @@
     {
       home.packages = with pkgs; [
         imv
+        starship-jj
         gnome-calculator
         snapshot
         zathura

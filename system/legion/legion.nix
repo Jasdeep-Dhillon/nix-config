@@ -3,8 +3,10 @@
   flake.nixosConfigurations.legion = inputs.nixpkgs.lib.nixosSystem {
     modules = with self.nixosModules; [
       base
+      homeManager
 
       # Optional Modules
+      theme
       bluetooth
       gaming
       nvidia

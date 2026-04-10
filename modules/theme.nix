@@ -1,16 +1,32 @@
 { inputs, ... }:
 {
   flake.nixosModules.theme =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
-      imports = [ inputs.stylix.nixosModules.stylix ];
+      # imports = [ inputs.stylix.nixosModules.stylix ];
+      
+    };
+  flake.homeModules.theme =
+    { pkgs, config, ... }:
+    {
+      imports = [ inputs.stylix.homeModules.stylix ];
       stylix = {
         enable = true;
         autoEnable = true;
+        # homeManagerIntegration.autoImport = false;
         base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
         # image = ../wallpapers/96740776_p5.jpg;
-
+        cursor = {
+          name = "Quintom_Ink";
+          package = pkgs.quintom-cursor-theme;
+          size = 20;
+        };
         fonts = {
+          sizes = {
+            applications = 14;
+            desktop = 12;
+            terminal = 12;
+          };
           serif = {
             package = pkgs.dejavu_fonts;
             name = "DejaVu Serif";
@@ -29,43 +45,38 @@
           };
         };
       };
-    };
-  flake.homeModules.theme =
-    { pkgs, config, ... }:
-    {
-      imports = [ inputs.stylix.homeModules.stylix ];
-      home.pointerCursor = {
-        enable = true;
-        name = "Quintom_Ink";
-        package = pkgs.quintom-cursor-theme;
-        size = 20;
-        hyprcursor = {
-          enable = true;
-          size = 20;
-        };
-        gtk.enable = true;
-      };
-      home.packages = with pkgs; [
-        catppuccin-qt5ct
-        rewaita
-        kdePackages.breeze
-        kdePackages.breeze-icons
-        adwaita-icon-theme
-        adwaita-icon-theme-legacy
-      ];
-      gtk = {
-        gtk4.theme = config.gtk.theme;
-        enable = true;
-        colorScheme = "dark";
-        iconTheme = {
-          package = pkgs.morewaita-icon-theme;
-          name = "MoreWaita";
-        };
-        font = {
-          name = "Inter";
-          size = 12;
-        };
-      };
+      # home.pointerCursor = {
+      #   enable = true;
+      #   name = "Quintom_Ink";
+      #   package = pkgs.quintom-cursor-theme;
+      #   size = 20;
+      #   hyprcursor = {
+      #     enable = true;
+      #     size = 20;
+      #   };
+      #   gtk.enable = true;
+      # };
+      # home.packages = with pkgs; [
+      #   catppuccin-qt5ct
+      #   rewaita
+      #   kdePackages.breeze
+      #   kdePackages.breeze-icons
+      #   adwaita-icon-theme
+      #   adwaita-icon-theme-legacy
+      # ];
+      # gtk = {
+      #   gtk4.theme = config.gtk.theme;
+      #   enable = true;
+      #   colorScheme = "dark";
+      #   iconTheme = {
+      #     package = pkgs.morewaita-icon-theme;
+      #     name = "MoreWaita";
+      #   };
+      #   # font = {
+      #   #   name = "Inter";
+      #   #   size = 12;
+      #   # };
+      # };
       dconf = {
         settings = {
           "org/gnome/desktop/wm/preferences" = {

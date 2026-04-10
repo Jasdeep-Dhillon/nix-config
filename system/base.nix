@@ -22,6 +22,7 @@
       stateVersion = "26.05";
       shell.enableNushellIntegration = true;
     };
+    nixpkgs.config.allowUnfree = true;
     programs.home-manager.enable = true;
   };
 }

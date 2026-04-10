@@ -16,7 +16,7 @@
         { proportion = 0.6667; }
         { proportion = 1.0; }
       ];
-      default-column-width = [ { proportion = 0.45; } ];
+      default-column-width = [ { proportion = 0.49; } ];
       focus-ring = {
         width = 2;
         active-color = "#8395F7";

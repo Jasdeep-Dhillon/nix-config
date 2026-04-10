@@ -11,7 +11,7 @@
           ]
           [
             (lib.getExe pkgs.runapp)
-            "niriusd"
+            "${pkgs.nirius}/bin/niriusd"
           ]
 
           [

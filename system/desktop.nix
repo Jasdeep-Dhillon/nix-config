@@ -5,6 +5,7 @@
       niri
       sddm
       window-manager
+      theme
     ];
   };
 }

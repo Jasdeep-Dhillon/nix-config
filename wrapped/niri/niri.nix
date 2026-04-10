@@ -46,32 +46,6 @@
           hotkey-overlay = {
             skip-at-startup = { };
           };
-          switch-events = {
-            lid-close = {
-              spawn = [
-                "noctalia-shell"
-                "ipc"
-                "call"
-                "toast"
-                "send"
-                ''
-                  { "body": "Laptop Closed", "type": "notice", "icon":"device-laptop-off" }
-                ''
-              ];
-            };
-            lid-open = {
-              spawn = [
-                "noctalia-shell"
-                "ipc"
-                "call"
-                "toast"
-                "send"
-                ''
-                  { "body": "Laptop Opened", "type": "notice", "icon":"device-laptop" }
-                ''
-              ];
-            };
-          };
           screenshot-path = ''
             ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H-%M-%S.png
           '';

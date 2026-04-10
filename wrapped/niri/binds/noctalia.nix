@@ -3,6 +3,32 @@
   flake.nixosModules.niriNoctalia =
     { pkgs, lib, ... }:
     {
+      settings.switch-events = {
+        lid-close = {
+          spawn = [
+            (lib.getExe pkgs.noctalia-shell)
+            "ipc"
+            "call"
+            "toast"
+            "send"
+            ''
+              { "body": "Laptop Closed", "type": "notice", "icon":"device-laptop-off" }
+            ''
+          ];
+        };
+        lid-open = {
+          spawn = [
+            (lib.getExe pkgs.noctalia-shell)
+            "ipc"
+            "call"
+            "toast"
+            "send"
+            ''
+              { "body": "Laptop Opened", "type": "notice", "icon":"device-laptop" }
+            ''
+          ];
+        };
+      };
       settings.binds = {
         "Mod+Space" = _: {
           props.cooldown-ms = 200;

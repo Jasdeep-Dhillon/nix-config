@@ -11,7 +11,6 @@
           xwayland-satellite
           jq
           kdePackages.kirigami.unwrapped
-          
         ];
         v2-settings = true;
         imports = with self.nixosModules; [

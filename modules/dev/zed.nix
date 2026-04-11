@@ -58,14 +58,14 @@
               padding = 4;
             };
           };
-          theme = lib.mkDefault {
+          theme = lib.mkForce {
             mode = "system";
             light = "Catppuccin Latte";
             dark = "Catppuccin Mocha";
           };
-          ui_font_family = lib.mkDefault "Maple Mono NL NF";
-          ui_font_size = lib.mkDefault 16;
-          buffer_font_size = lib.mkDefault 14;
+          ui_font_family = lib.mkForce "Maple Mono NL NF";
+          ui_font_size = lib.mkForce 16;
+          buffer_font_size = lib.mkForce 14;
           buffer_font_family = "Maple Mono NL NF";
           cursor_blink = false;
           autosave = {

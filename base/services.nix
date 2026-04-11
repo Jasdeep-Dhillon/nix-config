@@ -30,15 +30,16 @@
 
   flake.homeModules.services = {
     services.kdeconnect.enable = true;
-    services.hyprpolkitagent.enable = true;
+    services.polkit-gnome.enable = true;
+
+    home.file."Pictures/Wallpapers".source = ../wallpapers;
     services.hyprpaper = {
       enable = true;
       settings = {
         splash = false;
         wallpaper = [
           {
-            path = "${toString ./.}/wallpapers/96740776_p5.jpg";
-            monitor = "";
+            path = "/home/arc/Pictures/Wallpapers/96740776_p5.jpg";
           }
         ];
       };

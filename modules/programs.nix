@@ -182,7 +182,7 @@
       programs.starship = {
         enable = true;
         settings = {
-          palette = lib.mkDefault "catppuccin_mocha";
+          palette = lib.mkForce "catppuccin_mocha";
           format = lib.concatStrings [
             "$directory"
             "$git_branch"

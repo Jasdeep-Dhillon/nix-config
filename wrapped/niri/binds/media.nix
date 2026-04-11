@@ -18,25 +18,6 @@
         props.allow-when-locked = true;
         content.spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
       };
-
-      # Example media keys mapping using playerctl.
-      # This will work with any MPRIS-enabled media player.
-      XF86AudioPlay = _: {
-        props.allow-when-locked = true;
-        content.spawn-sh = "noctalia-shell ipc call media playPause";
-      };
-      XF86AudioStop = _: {
-        props.allow-when-locked = true;
-        content.spawn-sh = "noctalia-shell ipc call media stop";
-      };
-      XF86AudioPrev = _: {
-        props.allow-when-locked = true;
-        content.spawn-sh = "noctalia-shell ipc call media previous";
-      };
-      XF86AudioNext = _: {
-        props.allow-when-locked = true;
-        content.spawn-sh = "noctalia-shell ipc call media next";
-      };
     };
   };
 }

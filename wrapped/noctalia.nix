@@ -5,6 +5,8 @@
     {
       packages.noctalia-shell = inputs.wrapper-modules.wrappers.noctalia-shell.wrap {
         inherit pkgs;
+        package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        enableDumpScript = true;
         settings = {
           appLauncher = {
             autoPasteClipboard = true;
@@ -382,7 +384,7 @@
             animationDisabled = false;
             animationSpeed = 2;
             autoStartAuth = false;
-            avatarImage = "/home/arc/.local/share/icons/avatar";
+            avatarImage = ../avatar.jpg;
             boxRadiusRatio = 1;
             clockFormat = "hh\\nmm";
             clockStyle = "custom";
@@ -713,6 +715,24 @@
             wallpaperChangeMode = "random";
           };
         };
+        colors = {
+          mError = "#f38ba8";
+          mHover = "#c6a0f6";
+          mOnError = "#11111b";
+          mOnHover = "#11111b";
+          mOnPrimary = "#11111b";
+          mOnSecondary = "#11111b";
+          mOnSurface = "#cdd6f4";
+          mOnSurfaceVariant = "#a3b4eb";
+          mOnTertiary = "#11111b";
+          mOutline = "#4c4f69";
+          mPrimary = "#b4befe";
+          mSecondary = "#f5bde6";
+          mShadow = "#11111b";
+          mSurface = "#070722";
+          mSurfaceVariant = "#1e1e2e";
+          mTertiary = "#c6a0f6";
+        };
         plugins = {
           sources = [
             {
@@ -732,6 +752,21 @@
             };
           };
           version = 2;
+        };
+        pluginSettings = {
+          privacy-indicator = {
+            hideInactive = true;
+            enableToast = true;
+            removeMargins = false;
+            iconSpacing = 4;
+            activeColor = "primary";
+            inactiveColor = "none";
+            micFilterRegex = "";
+          };
+        };
+        preInstalledPlugins = {
+          privacy-indicator.src = "${inputs.noctalia-plugins.outPath}/privacy-indicator";
+          unicode-picker.src = "${inputs.noctalia-plugins.outPath}/unicode-picker";
         };
       };
     };

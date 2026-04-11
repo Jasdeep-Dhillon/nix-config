@@ -31,7 +31,7 @@
       };
       settings.binds = {
         "Mod+F5" = {
-          spawn = [(lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-shell)];
+          spawn = [ (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-shell) ];
         };
         "Mod+Space" = _: {
           props.cooldown-ms = 200;
@@ -173,6 +173,46 @@
             "call"
             "brightness"
             "decrease"
+          ];
+        };
+        XF86AudioPlay = _: {
+          props.allow-when-locked = true;
+          content.spawn = [
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-shell)
+            "ipc"
+            "call"
+            "media"
+            "playPause"
+          ];
+        };
+        XF86AudioStop = _: {
+          props.allow-when-locked = true;
+          content.spawn = [
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-shell)
+            "ipc"
+            "call"
+            "media"
+            "stop"
+          ];
+        };
+        XF86AudioPrev = _: {
+          props.allow-when-locked = true;
+          content.spawn = [
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-shell)
+            "ipc"
+            "call"
+            "media"
+            "previous"
+          ];
+        };
+        XF86AudioNext = _: {
+          props.allow-when-locked = true;
+          content.spawn = [
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-shell)
+            "ipc"
+            "call"
+            "media"
+            "next"
           ];
         };
       };

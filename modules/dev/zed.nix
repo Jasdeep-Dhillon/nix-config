@@ -27,6 +27,7 @@
           "github-actions"
           "html-snippets"
           "gitignore-templates"
+          "just"
         ];
         userSettings = {
           inlay_hints = {

@@ -5,7 +5,7 @@
     {
       packages.niri = inputs.wrapper-modules.wrappers.niri.wrap {
         inherit pkgs;
-        package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
+        # package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
         extraPackages = with pkgs; [
           nirius
           xwayland-satellite

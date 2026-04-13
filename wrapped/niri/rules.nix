@@ -8,22 +8,22 @@
         ];
         place-within-backdrop = true;
       }
-      {
-        matches = [
-          { namespace = "^noctalia-(background|launcher-overlay|dock)-.*$"; }
-        ];
-        background-effect = {
-          xray = false;
-        };
-      }
+      # {
+      #   matches = [
+      #     { namespace = "^noctalia-(background|launcher-overlay|dock)-.*$"; }
+      #   ];
+      #   background-effect = {
+      #     xray = false;
+      #   };
+      # }
     ];
     settings.window-rules = [
-      {
-        backgroud-effect = {
-          blur = true;
-          xray = false;
-        };
-      }
+      # {
+      #   backgroud-effect = {
+      #     blur = true;
+      #     xray = false;
+      #   };
+      # }
       {
         matches = [ { is-floating = true; } ];
         shadow = {

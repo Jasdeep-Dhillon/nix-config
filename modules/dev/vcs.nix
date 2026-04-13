@@ -19,7 +19,7 @@
     { pkgs, ... }:
     let
       name = "Jasdeep-Dhillon";
-      email = "jsdhillon286@gmail.com";
+      email = "jasdeepsdhillon@proton.me";
       pubkey = "~/.ssh/id_ed25519.pub";
     in
     {
@@ -31,7 +31,7 @@
             inherit email;
             inherit name;
           };
-          user.signingKey = pubkey;
+          user.signingkey = pubkey;
           gpg.format = "ssh";
           lfs.enable = true;
           push = {
@@ -54,6 +54,7 @@
             autosquash = true;
             autostash = true;
           };
+          commit.gpgsign = true;
           commit.verbose = true;
           commit.cleanup = "scissors";
           rerere.enabled = true;
@@ -64,8 +65,10 @@
           fetch.prune = true;
           safe.directory = "/media/Storage/Projects/*";
           url = {
-            "git@github.com:".insteadOf = "gh:";
-            # "git@github.com:".insteadOf = "https://github.com/";
+            "git@github.com:".insteadOf = [
+              "gh:"
+              "https://github.com/"
+            ];
           };
           filter = {
             "lfs" = {

@@ -22,12 +22,16 @@
         autoEnable = true;
         base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
         polarity = "dark";
-        targets.qt.enable = true;
+        targets.qt = {
+          enable = true;
+          platform = "qtct";
+          standardDialogs = "xdgdesktopportal";
+        };
         icons = {
           enable = true;
-          dark = "MoreWaita";
-          light = "MoreWaita";
-          package = pkgs.morewaita-icon-theme;
+          dark = "Adwaita";
+          light = "Adwaita";
+          package = pkgs.adwaita-icon-theme;
         };
         fonts = {
           sizes = {

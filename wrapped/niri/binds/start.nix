@@ -16,7 +16,7 @@
 
           [
             (lib.getExe pkgs.runapp)
-            (lib.getExe pkgs.steam)
+            "steam"
           ]
           [
             (lib.getExe pkgs.runapp)

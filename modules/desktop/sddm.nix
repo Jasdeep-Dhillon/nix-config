@@ -24,7 +24,6 @@
     {
       services.displayManager.sddm = {
         enable = true;
-        package = pkgs.kdePackages.sddm;
         theme = lib.mkForce "breeze";
         wayland.enable = true;
         wayland.compositor = "kwin";

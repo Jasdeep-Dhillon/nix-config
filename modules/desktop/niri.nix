@@ -1,18 +1,17 @@
 { self, ... }:
 {
   flake.nixosModules.niri =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       imports = [
         self.nixosModules.settings
       ];
-      services.gnome.gnome-keyring.enable = true;
-      # environment.systemPackages = with pkgs; [
-      #   nirius
-      #   xwayland-satellite
-      #   jq
-      #   kdePackages.kirigami.unwrapped
-      # ];
+      services.gnome.gnome-keyring.enable = false;
+      security.pam.services = {
+        login.kwallet.enable = lib.mkForce false;
+        kde.kwallet.enable = lib.mkForce false;
+      };
+      services.displayManager.defaultSession = "niri";
       programs.niri = {
         enable = true;
         package = self.packages.${pkgs.stdenv.hostPlatform.system}.niri;

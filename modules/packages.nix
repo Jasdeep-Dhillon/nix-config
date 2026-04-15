@@ -40,8 +40,6 @@
           withVencord = true;
           withOpenASAR = true;
         })
-        figma-linux
-        localsend
         loupe
         unrar
         prismlauncher

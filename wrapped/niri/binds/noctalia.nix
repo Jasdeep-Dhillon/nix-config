@@ -165,6 +165,26 @@
             "increase"
           ];
         };
+        "Mod+XF86AudioRaiseVolume" = _: {
+          props.allow-when-locked = true;
+          content.spawn = [
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-shell)
+            "ipc"
+            "call"
+            "brightness"
+            "increase"
+          ];
+        };
+        "Mod+XF86AudioLowerVolume" = _: {
+          props.allow-when-locked = true;
+          content.spawn = [
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-shell)
+            "ipc"
+            "call"
+            "brightness"
+            "decrease"
+          ];
+        };
         XF86MonBrightnessDown = _: {
           props.allow-when-locked = true;
           content.spawn = [

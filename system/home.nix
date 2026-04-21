@@ -34,7 +34,7 @@
         shortcuts
 
         # Dev
-        android
+        # android
         editor
         devApps
         vcs

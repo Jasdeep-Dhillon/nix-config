@@ -47,7 +47,7 @@
         sgdboop
         winetricks
         wineWow64Packages.unstableFull
-        # nero-umu
+        nero-umu
         faugus-launcher
         protonplus
         # umu-launcher

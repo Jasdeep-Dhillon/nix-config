@@ -111,7 +111,7 @@
           { title = "Marvel Rivals"; }
           { title = "Glace"; }
           { title = "Clair Obscur: Expedition 33  "; }
-          { app-id = "^steam_app_[0-9]*$"; }
+          # { app-id = "^steam_app_[0-9]*$"; }
           { title = "Assassin's Creed IV Black Flag"; }
           { app-id = "gamescope"; }
           { app-id = "Minecraft"; }

@@ -45,7 +45,7 @@
         gnome-calculator
         snapshot
         zathura
-        papers
+        kdePackages.okular
         resources
         video-trimmer
         bitwarden-desktop

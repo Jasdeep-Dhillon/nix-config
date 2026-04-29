@@ -24,23 +24,23 @@
   };
 
   flake.homeModules.imports = {
-      imports = with self.homeModules; [
-        base
-        theme
-        services
-        packages
-        programs
+    imports = with self.homeModules; [
+      base
+      theme
+      services
+      packages
+      programs
 
-        shortcuts
+      shortcuts
 
-        # Dev
-        # android
-        editor
-        devApps
-        vcs
-        toolchain
-        zed
-        lsp
-      ];
-    };
+      # Dev
+      # android
+      editor
+      devApps
+      vcs
+      toolchain
+      zed
+      lsp
+    ];
+  };
 }

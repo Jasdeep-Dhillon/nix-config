@@ -6,25 +6,6 @@
       fsType = "btrfs";
     };
 
-    fileSystems."/media/lain/Storage" = {
-      device = "server:/Storage";
-      fsType = "nfs";
-      options = [
-        "x-systemd.automount"
-        "noauto"
-        "nfsvers=4.2"
-      ];
-    };
-    fileSystems."/media/lain/External" = {
-      device = "server:/External";
-      fsType = "nfs";
-      options = [
-        "x-systemd.automount"
-        "noauto"
-        "nfsvers=4.2"
-      ];
-    };
-
     swapDevices = [
       {
         device = "/var/lib/swapfile";

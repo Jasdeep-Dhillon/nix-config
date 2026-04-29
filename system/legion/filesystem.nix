@@ -12,6 +12,7 @@
       options = [
         "x-systemd.automount"
         "noauto"
+        "nfsvers=4.2"
       ];
     };
     fileSystems."/media/lain/External" = {
@@ -20,6 +21,7 @@
       options = [
         "x-systemd.automount"
         "noauto"
+        "nfsvers=4.2"
       ];
     };
 

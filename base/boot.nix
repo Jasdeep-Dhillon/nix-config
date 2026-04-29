@@ -31,6 +31,7 @@
         supportedFilesystems = {
           btrfs = true;
           ntfs = true;
+          nfs = true;
         };
       };
     };

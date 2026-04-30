@@ -193,6 +193,7 @@
         settings = {
           palette = lib.mkForce "catppuccin_mocha";
           format = lib.concatStrings [
+            "$hostname"
             "$directory"
             "$git_branch"
             "$git_state"
@@ -219,6 +220,10 @@
           ];
           right_format = "";
           add_newline = false;
+          hostname = {
+            format = "[](fg:#f5c2e7)[ $hostname ]($style)[](fg:#f5c2e7) ";
+            style = "fg:#1C3A5E bg:#f5c2e7";
+          };
           directory = {
             format = "[](fg:#7287fd)[  $path ]($style)[](fg:#7287fd)";
             style = "fg:#dce0e8 bg:#7287fd";

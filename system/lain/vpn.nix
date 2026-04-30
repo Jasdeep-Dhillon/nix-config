@@ -7,7 +7,10 @@
         script = ''
           ${pkgs.networkmanager}/bin/nmcli connection up warp
         '';
-        wantedBy = [ "multi-user.target" ];
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
+        requires = [ "network-online.target" ];
+        wantedBy = [ "network-online.target" ];
       };
     };
 }

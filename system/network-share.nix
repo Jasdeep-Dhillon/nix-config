@@ -38,16 +38,6 @@
       publish.userServices = true;
       nssmdns4 = true;
     };
-    fileSystems."/export/Storage" = {
-      device = "/media/Storage";
-      fsType = "btrfs";
-      options = [ "bind" ];
-    };
-    fileSystems."/export/External" = {
-      device = "/run/media/arc/External";
-      fsType = "ntfs";
-      options = [ "bind" ];
-    };
   };
 
   flake.nixosModules.legion =

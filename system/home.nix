@@ -35,6 +35,7 @@
 
       # Dev
       # android
+      agents
       editor
       devApps
       vcs

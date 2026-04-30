@@ -63,6 +63,7 @@
         onlyoffice-desktopeditors
         pear-desktop
         easyeffects
+        jellyfin-desktop
         inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
     };

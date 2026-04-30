@@ -2,7 +2,10 @@
 {
   flake.nixosModules.services = {
     services.dbus.implementation = "broker";
-    services.udisks2.enable = true;
+    services.udisks2 = {
+      enable = true;
+      mountOnMedia = true;
+    };
     services.fwupd.enable = true;
     services.upower = {
       enable = true;

@@ -11,7 +11,7 @@
         runapp
         quickshell
         nautilus
-        file-roller
+        kdePackages.ark
         kdePackages.dolphin
       ];
 

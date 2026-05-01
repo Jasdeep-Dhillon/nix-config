@@ -3,7 +3,7 @@
   flake.nixosConfigurations.legion = inputs.nixpkgs.lib.nixosSystem {
     modules = with self.nixosModules; [
       base
-      # homeManager
+      home
 
       # Optional Modules
       theme

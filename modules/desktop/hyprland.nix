@@ -1,8 +1,13 @@
-{ ... }:
+{ self, ... }:
 {
   flake.nixosModules.hyprland =
     { pkgs, ... }:
     {
+      imports = with self.nixosModules; [
+        sddm
+        window-manager
+        theme
+      ];
       environment.systemPackages = with pkgs; [
         # Hypr Utilities
         hypridle
@@ -11,7 +16,7 @@
         hyprcursor
         hyprlock
       ];
-      
+
       services.hypridle.enable = true;
 
       programs = {

@@ -24,9 +24,10 @@
           niriBinds
           niriApplications
           niriMedia
-          niriNoctalia
           niriWindows
           niriStart
+
+          niriShell
         ];
         settings = {
           prefer-no-csd = { };

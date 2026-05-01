@@ -3,6 +3,12 @@
   flake.nixosModules.niri =
     { pkgs, ... }:
     {
+      imports = with self.nixosModules; [
+        sddm
+        window-manager
+        theme
+        dms
+      ];
       services.gnome.gnome-keyring.enable = true;
       services.displayManager.defaultSession = "niri";
       programs.niri = {

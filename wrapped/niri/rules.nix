@@ -1,22 +1,6 @@
 { ... }:
 {
   flake.nixosModules.niriRules = {
-    settings.layer-rules = [
-      {
-        matches = [
-          { namespace = "^noctalia-overview*"; }
-        ];
-        place-within-backdrop = true;
-      }
-      {
-        matches = [
-          { namespace = "^noctalia-(background|launcher-overlay|dock)-.*$"; }
-          # { namespace = "^noctalia-osd.*$"; }
-          # { namespace = "^noctalia-toast.*$"; }
-          # { namespace = "^noctalia-notifications.*$"; }
-        ];
-      }
-    ];
     settings.window-rules = [
       {
         background-effect = {

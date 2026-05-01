@@ -4,27 +4,23 @@
   ...
 }:
 {
-  flake.nixosModules.homeManager =
+  flake.nixosModules.home =
     { ... }:
     {
       imports = [ inputs.home-manager.nixosModules.default ];
       home-manager = {
         # useGlobalPkgs = true;
         useUserPackages = true;
+        backupFileExtension = "bak";
+        # users.arc = self.homeModules.imports;
+        users.arc.home.stateVersion = "26.05";
       };
 
-      home-manager.users.arc = self.homeModules.imports;
     };
 
   flake.homeConfigurations.arc = inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
-    modules = [
-      self.homeModules.imports
-    ];
-  };
-
-  flake.homeModules.imports = {
-    imports = with self.homeModules; [
+    modules = with self.homeModules; [
       base
       theme
       services

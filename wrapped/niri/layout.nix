@@ -16,7 +16,7 @@
         { proportion = 0.6667; }
         { proportion = 1.0; }
       ];
-      default-column-width = [ { proportion = 0.49; } ];
+      default-column-width = [ { proportion = 0.5; } ];
       focus-ring = {
         width = 2;
         active-color = "#8395F7";
@@ -25,12 +25,12 @@
       border = {
         off = { };
       };
-      struts = {
-        left = -2;
-        right = -2;
-        top = -1;
-        bottom = -2;
-      };
+      # struts = {
+      #   left = -2;
+      #   right = -2;
+      #   top = -1;
+      #   bottom = -2;
+      # };
       tab-indicator = {
         place-within-column = { };
         gap = 4;

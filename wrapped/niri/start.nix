@@ -1,4 +1,4 @@
-{ self, ... }:
+{ ... }:
 {
   flake.nixosModules.niriStart =
     { pkgs, lib, ... }:
@@ -7,13 +7,8 @@
         spawn-at-startup = [
           [
             (lib.getExe pkgs.runapp)
-            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-shell)
-          ]
-          [
-            (lib.getExe pkgs.runapp)
             "${pkgs.nirius}/bin/niriusd"
           ]
-
           [
             (lib.getExe pkgs.runapp)
             "steam"

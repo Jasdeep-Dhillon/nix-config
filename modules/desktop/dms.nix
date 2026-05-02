@@ -1,31 +1,13 @@
 { inputs, self, ... }:
 {
-  flake.nixosModules.dms =
-    { pkgs, ... }:
-    {
-      imports = [
-        inputs.home-manager.nixosModules.default
-        inputs.dms.nixosModules.dank-material-shell
-        inputs.dms-plugin-registry.modules.default
-      ];
-      home-manager.users.arc = {
-        imports = [ self.homeModules.dms ];
-      };
-      programs.dank-material-shell = {
-        enable = true;
-        package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        enableSystemMonitoring = true;
-        enableVPN = true;
-        enableClipboardPaste = true;
-        enableDynamicTheming = false;
-        plugins = {
-          commandRunner.enable = true;
-          emojiLauncher.enable = true;
-          dankActions.enable = true;
-          usbManager.enable = true;
-        };
-      };
+  flake.nixosModules.dms = {
+    imports = [
+      inputs.home-manager.nixosModules.default
+    ];
+    home-manager.users.arc = {
+      imports = [ self.homeModules.dms ];
     };
+  };
 
   flake.homeModules.dms =
     { config, pkgs, ... }:
@@ -76,10 +58,22 @@
     {
       imports = [
         inputs.dms.homeModules.dank-material-shell
+        inputs.dms-plugin-registry.modules.default
       ];
+      home.file.".face".source = ../../avatar.jpg;
       programs.dank-material-shell = {
         enable = true;
         package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        enableSystemMonitoring = true;
+        enableVPN = true;
+        enableClipboardPaste = true;
+        enableDynamicTheming = false;
+        plugins = {
+          commandRunner.enable = true;
+          emojiLauncher.enable = true;
+          dankActions.enable = true;
+          usbManager.enable = true;
+        };
         settings = {
           currentThemeName = "custom";
           currentThemeCategory = "custom";
@@ -257,8 +251,8 @@
             };
           };
           waveProgressEnabled = true;
-          scrollTitleEnabled = true;
-          audioVisualizerEnabled = true;
+          scrollTitleEnabled = false;
+          audioVisualizerEnabled = false;
           audioScrollMode = "volume";
           audioWheelScrollAmount = 5;
           clockCompactMode = false;
@@ -287,7 +281,7 @@
           greeterEnableU2f = false;
           greeterWallpaperPath = "";
           mediaSize = 1;
-          appLauncherViewMode = "list";
+          appLauncherViewMode = "grid";
           spotlightModalViewMode = "list";
           browserPickerViewMode = "grid";
           browserUsageHistory = { };

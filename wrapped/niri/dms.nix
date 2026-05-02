@@ -3,15 +3,14 @@
   flake.nixosModules.niriShell =
     { pkgs, lib, ... }:
     {
-      settings = {
-        spawn-at-startup = [
-          [
-            (lib.getExe pkgs.runapp)
-            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
-            "run"
-          ]
-        ];
-      };
+      settings.spawn-at-startup = [
+        [
+          (lib.getExe pkgs.runapp)
+          (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
+          "run"
+        ]
+      ];
+
       settings.switch-events = {
         lid-close = {
           spawn = [
@@ -36,7 +35,10 @@
       };
       settings.binds = {
         "Mod+F5" = {
-          spawn = [ (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default) ];
+          spawn = [
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
+            "run"
+          ];
         };
         "Mod+Space" = _: {
           props.cooldown-ms = 200;
@@ -242,15 +244,15 @@
       };
       settings.layer-rules = [
         {
-          matches = [
-            {
-              layer = "overlay";
-            }
-          ];
-          background-effect = {
-            blur = true;
-            xray = true;
-          };
+          # matches = [
+          #   {
+          #     layer = "overlay";
+          #   }
+          # ];
+          # background-effect = {
+          #   blur = true;
+          #   xray = true;
+          # };
         }
       ];
     };

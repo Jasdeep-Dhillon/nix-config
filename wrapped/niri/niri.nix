@@ -10,8 +10,7 @@
           xwayland-satellite
           jq
           kdePackages.kirigami.unwrapped
-          seahorse
-          inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default
+          seahorse   
         ];
         v2-settings = true;
         imports = with self.nixosModules; [

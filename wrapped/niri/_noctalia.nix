@@ -3,6 +3,7 @@
   flake.nixosModules.niriShell =
     { pkgs, lib, ... }:
     {
+      extraPackages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-shell ];
       settings = {
         spawn-at-startup = [
           [

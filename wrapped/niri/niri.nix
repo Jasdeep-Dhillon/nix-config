@@ -11,7 +11,7 @@
           jq
           kdePackages.kirigami.unwrapped
           seahorse
-          self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia-shell
+          inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default
         ];
         v2-settings = true;
         imports = with self.nixosModules; [

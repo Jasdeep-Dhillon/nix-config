@@ -106,7 +106,7 @@
             style = "Breeze";
             icon_theme = "breeze-dark";
             standard_dialogs = "xdgdesktopportal";
-            color_scheme_path = "~/.nix-profile/share/qt5ct/colors/catppuccin-mocha-lavender.conf";
+            color_scheme_path = "${pkgs.catppuccin-qt5ct}/share/qt5ct/colors/catppuccin-mocha-lavender.conf";
             custom_palette = true;
           };
           Fonts = {
@@ -119,7 +119,7 @@
             style = "Breeze";
             icon_theme = "breeze-dark";
             standard_dialogs = "xdgdesktopportal";
-            color_scheme_path = "~/.nix-profile/share/qt6ct/colors/catppuccin-mocha-lavender.conf";
+            color_scheme_path = "${pkgs.catppuccin-qt5ct}/share/qt6ct/colors/catppuccin-mocha-lavender.conf";
             custom_palette = true;
           };
           Fonts = {

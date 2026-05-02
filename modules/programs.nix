@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 {
   flake.nixosModules.programs =
-    { pkgs, config, ... }:
+    { pkgs, ... }:
     {
       imports = [ inputs.home-manager.nixosModules.default ];
       home-manager.users.arc = {
@@ -17,6 +17,16 @@
         settings = {
           theme = ''"Catppuccin Mocha"'';
         };
+      };
+      environment.shells = [ pkgs.nushell ];
+    };
+
+  flake.nixosModules.guiPrograms =
+    { pkgs, config, ... }:
+    {
+      imports = [ inputs.home-manager.nixosModules.default ];
+      home-manager.users.arc = {
+        imports = [ self.homeModules.guiPrograms ];
       };
       programs.obs-studio = {
         enable = true;
@@ -35,70 +45,11 @@
           obs-vkcapture
         ];
       };
-      environment.shells = [ pkgs.nushell ];
     };
 
-  flake.homeModules.programs =
+  flake.homeModules.guiPrograms =
+    { pkgs, ... }:
     {
-      pkgs,
-      lib,
-      config,
-      ...
-    }:
-    {
-      xdg.configFile."fastfetch/nekoarc.png".source = ../icons/nekoarc.png;
-      programs.fastfetch = {
-        enable = true;
-        settings = {
-          logo = {
-            type = "auto";
-            source = "~/.config/fastfetch/nekoarc.png";
-            width = 35;
-            height = 20;
-          };
-          display = {
-            separator = "->";
-            color = {
-              keys = "blue";
-            };
-            # key = {
-            #   width = 6;
-            #   type = "icon";
-            # };
-          };
-          modules = [
-            "title"
-            "seperator"
-            {
-              type = "os";
-              format = "{name} {version}";
-            }
-            {
-              type = "host";
-              format = "{family}";
-            }
-            "kernel"
-            "packages"
-            "shell"
-            "de"
-            "wm"
-            "terminal"
-            "separator"
-            {
-              type = "cpu";
-              format = "{name} ({cores-physical} Cores/{cores-logical} Threads)";
-            }
-            "gpu"
-            "memory"
-            "swap"
-            "disk"
-            "separator"
-            "localip"
-            "battery"
-            "poweradapter"
-          ];
-        };
-      };
       programs.kitty = {
         enable = true;
         settings = {
@@ -208,6 +159,64 @@
           eisa01.smartskip
           webtorrent-mpv-hook
         ];
+      };
+    };
+
+  flake.homeModules.programs =
+    { lib, config, ... }:
+    {
+      xdg.configFile."fastfetch/nekoarc.png".source = ../icons/nekoarc.png;
+      programs.fastfetch = {
+        enable = true;
+        settings = {
+          logo = {
+            type = "auto";
+            source = "~/.config/fastfetch/nekoarc.png";
+            width = 35;
+            height = 20;
+          };
+          display = {
+            separator = "->";
+            color = {
+              keys = "blue";
+            };
+            # key = {
+            #   width = 6;
+            #   type = "icon";
+            # };
+          };
+          modules = [
+            "title"
+            "seperator"
+            {
+              type = "os";
+              format = "{name} {version}";
+            }
+            {
+              type = "host";
+              format = "{family}";
+            }
+            "kernel"
+            "packages"
+            "shell"
+            "de"
+            "wm"
+            "terminal"
+            "separator"
+            {
+              type = "cpu";
+              format = "{name} ({cores-physical} Cores/{cores-logical} Threads)";
+            }
+            "gpu"
+            "memory"
+            "swap"
+            "disk"
+            "separator"
+            "localip"
+            "battery"
+            "poweradapter"
+          ];
+        };
       };
       programs.starship = {
         enable = true;

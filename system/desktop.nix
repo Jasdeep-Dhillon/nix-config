@@ -4,6 +4,7 @@
     imports = with self.nixosModules; [
       niri
       inputs.home-manager.nixosModules.default
+      self.nixosModules.guiPrograms
     ];
     home-manager.users.arc = {
       imports = [ self.homeModules.desktop ];

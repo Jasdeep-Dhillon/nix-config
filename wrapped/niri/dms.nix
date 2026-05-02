@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, inputs, ... }:
 {
   flake.nixosModules.niriShell =
     { pkgs, lib, ... }:
@@ -7,7 +7,7 @@
         spawn-at-startup = [
           [
             (lib.getExe pkgs.runapp)
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "run"
           ]
         ];
@@ -15,7 +15,7 @@
       settings.switch-events = {
         lid-close = {
           spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "toast"
@@ -25,7 +25,7 @@
         };
         lid-open = {
           spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "toast"
@@ -36,13 +36,13 @@
       };
       settings.binds = {
         "Mod+F5" = {
-          spawn = [ (lib.getExe pkgs.dms-shell) ];
+          spawn = [ (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default) ];
         };
         "Mod+Space" = _: {
           props.cooldown-ms = 200;
           props.hotkey-overlay-title = "Launcher";
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "spotlight"
@@ -53,7 +53,7 @@
           props.repeat = false;
           props.hotkey-overlay-title = "Clipboard";
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "clipboard"
@@ -64,7 +64,7 @@
           props.repeat = false;
           props.hotkey-overlay-title = "Clipboard";
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "spotlight"
@@ -76,7 +76,7 @@
           props.repeat = false;
           props.hotkey-overlay-title = "Emoji Picker";
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "spotlight"
@@ -88,7 +88,7 @@
           props.repeat = false;
           props.hotkey-overlay-title = "Output Switch";
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "dash"
@@ -100,7 +100,7 @@
           props.repeat = false;
           props.hotkey-overlay-title = "Settings";
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "settings"
@@ -111,7 +111,7 @@
           props.repeat = false;
           props.hotkey-overlay-title = "Lock Screen";
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "lock"
@@ -122,7 +122,7 @@
           props.repeat = false;
           props.hotkey-overlay-title = "Power Menu";
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "powermenu"
@@ -133,7 +133,7 @@
           props.repeat = false;
           props.hotkey-overlay-title = "Control Center";
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "controlCenter"
@@ -144,7 +144,7 @@
           props.repeat = false;
           props.hotkey-overlay-title = "Notifications";
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "notifications"
@@ -155,7 +155,7 @@
         XF86MonBrightnessUp = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "brightness"
@@ -166,7 +166,7 @@
         "Mod+XF86AudioRaiseVolume" = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "brightness"
@@ -178,7 +178,7 @@
         "Mod+XF86AudioLowerVolume" = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "brightness"
@@ -189,7 +189,7 @@
         XF86MonBrightnessDown = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "brightness"
@@ -201,7 +201,7 @@
         XF86AudioPlay = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "mpris"
@@ -211,7 +211,7 @@
         XF86AudioStop = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "mpris"
@@ -221,7 +221,7 @@
         XF86AudioPrev = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "mpris"
@@ -231,7 +231,7 @@
         XF86AudioNext = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe pkgs.dms-shell)
+            (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
             "mpris"
@@ -239,25 +239,5 @@
           ];
         };
       };
-      settings.layout = {
-        background-color = "transparent";
-      };
-      settings.layer-rules = [
-        {
-          matches = [
-            { namespace = "^quickshell$"; }
-          ];
-          place-within-backdrop = true;
-        }
-        {
-          matches = [
-            { namespace = ''r#"^dms:.*"#''; }
-            # { namespace = "^dms:(color-picker|clipboard|spotlight|settings)$"; }
-            # { namespace = "^noctalia-osd.*$"; }
-            # { namespace = "^noctalia-toast.*$"; }
-            # { namespace = "^noctalia-notifications.*$"; }
-          ];
-        }
-      ];
     };
 }

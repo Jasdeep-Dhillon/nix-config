@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ inputs, ... }:
 {
   flake.nixosModules.niriShell =
     { pkgs, lib, ... }:
@@ -81,19 +81,18 @@
             "call"
             "spotlight"
             "openQuery"
-            ":"
+            ":e "
           ];
         };
-        "Mod+K" = _: {
+        "Mod+F3" = _: {
           props.repeat = false;
           props.hotkey-overlay-title = "Output Switch";
           content.spawn = [
             (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
-            "dash"
-            "toggle"
-            "media"
+            "audio"
+            "cycleoutput"
           ];
         };
         "Mod+I" = _: {
@@ -107,7 +106,7 @@
             "toggle"
           ];
         };
-        "Mod+L" = _: {
+        "Mod+F1" = _: {
           props.repeat = false;
           props.hotkey-overlay-title = "Lock Screen";
           content.spawn = [
@@ -136,7 +135,7 @@
             (lib.getExe inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "ipc"
             "call"
-            "controlCenter"
+            "control-center"
             "toggle"
           ];
         };
@@ -161,6 +160,7 @@
             "brightness"
             "increment"
             "2"
+            ''""''
           ];
         };
         "Mod+XF86AudioRaiseVolume" = _: {
@@ -172,7 +172,7 @@
             "brightness"
             "increment"
             "2"
-            "''"
+            ''""''
           ];
         };
         "Mod+XF86AudioLowerVolume" = _: {
@@ -183,7 +183,8 @@
             "call"
             "brightness"
             "decrement"
-            "''"
+            "2"
+            ''""''
           ];
         };
         XF86MonBrightnessDown = _: {
@@ -195,7 +196,7 @@
             "brightness"
             "decrement"
             "2"
-            "''"
+            ''""''
           ];
         };
         XF86AudioPlay = _: {
@@ -239,5 +240,18 @@
           ];
         };
       };
+      settings.layer-rules = [
+        {
+          matches = [
+            {
+              layer = "overlay";
+            }
+          ];
+          background-effect = {
+            blur = true;
+            xray = true;
+          };
+        }
+      ];
     };
 }

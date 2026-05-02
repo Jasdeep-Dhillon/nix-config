@@ -526,11 +526,11 @@
               ];
               clickThrough = true;
               enabled = true;
-              fontScale = 1.25;
+              fontScale = 1.0;
               gothCornerRadiusOverride = true;
               gothCornerRadiusValue = 8;
               gothCornersEnabled = false;
-              iconScale = 1;
+              iconScale = 1.2;
               id = "default";
               innerPadding = 4;
               leftWidgets = [

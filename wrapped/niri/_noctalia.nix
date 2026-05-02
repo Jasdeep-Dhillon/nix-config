@@ -85,7 +85,7 @@
             "emoji"
           ];
         };
-        "Mod+K" = _: {
+        "Mod+F3" = _: {
           props.repeat = false;
           props.hotkey-overlay-title = "Audio Picker";
           content.spawn = [
@@ -107,7 +107,7 @@
             "toggle"
           ];
         };
-        "Mod+L" = _: {
+        "Mod+F1" = _: {
           props.repeat = false;
           props.hotkey-overlay-title = "Lock Screen";
           content.spawn = [

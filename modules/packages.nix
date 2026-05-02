@@ -1,8 +1,9 @@
-{ inputs, ... }:
+{ self, inputs, ... }:
 {
   flake.nixosModules.packages =
-    { pkgs, config, ... }:
+    { pkgs, ... }:
     {
+      imports = [ inputs.home-manager.nixosModules.default ];
       environment.systemPackages = with pkgs; [
         ffmpeg
         yt-dlp
@@ -17,22 +18,8 @@
         yazi
         s-tui
       ];
-      programs.obs-studio = {
-        enable = true;
-        # optional Nvidia hardware acceleration
-        package = (
-          pkgs.obs-studio.override {
-            cudaSupport = config.hardware.nvidia.enabled;
-          }
-        );
-        plugins = with pkgs.obs-studio-plugins; [
-          wlrobs
-          obs-backgroundremoval
-          obs-pipewire-audio-capture
-          obs-vaapi # optional AMD hardware acceleration
-          obs-gstreamer
-          obs-vkcapture
-        ];
+      home-manager.users.arc = {
+        imports = [ self.homeModules.packages ];
       };
     };
 

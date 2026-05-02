@@ -1,8 +1,12 @@
-{ ... }:
+{ self, inputs, ... }:
 {
   flake.nixosModules.programs =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
+      imports = [ inputs.home-manager.nixosModules.default ];
+      home-manager.users.arc = {
+        imports = [ self.homeModules.programs ];
+      };
       security.polkit.enable = true;
       programs.appimage = {
         enable = true;
@@ -13,6 +17,23 @@
         settings = {
           theme = ''"Catppuccin Mocha"'';
         };
+      };
+      programs.obs-studio = {
+        enable = true;
+        # optional Nvidia hardware acceleration
+        package = (
+          pkgs.obs-studio.override {
+            cudaSupport = config.hardware.nvidia.enabled;
+          }
+        );
+        plugins = with pkgs.obs-studio-plugins; [
+          wlrobs
+          obs-backgroundremoval
+          obs-pipewire-audio-capture
+          obs-vaapi # optional AMD hardware acceleration
+          obs-gstreamer
+          obs-vkcapture
+        ];
       };
       environment.shells = [ pkgs.nushell ];
     };
@@ -445,7 +466,7 @@
           export-env { $env.STARSHIP_SHELL = "nu"; load-env {
               STARSHIP_SESSION_KEY: (random chars -l 16)
               PROMPT_MULTILINE_INDICATOR: (
-                  ^${config.home.homeDirectory}/.nix-profile/bin/starship prompt --continuation
+                  ^starship prompt --continuation
               )
 
               # Does not play well with default character module.
@@ -457,7 +478,7 @@
                       # The initial value of `$env.CMD_DURATION_MS` is always `0823`, which is an official setting.
                       # See https://github.com/nushell/nushell/discussions/6402#discussioncomment-3466687.
                       let cmd_duration = if $env.CMD_DURATION_MS == "0823" { 0 } else { $env.CMD_DURATION_MS };
-                      ^${config.home.homeDirectory}/.nix-profile/bin/starship prompt
+                      ^starship prompt
                           --cmd-duration $cmd_duration
                           $"--status=($env.LAST_EXIT_CODE)"
                           --terminal-width (term size).columns
@@ -480,7 +501,7 @@
                       # The initial value of `$env.CMD_DURATION_MS` is always `0823`, which is an official setting.
                       # See https://github.com/nushell/nushell/discussions/6402#discussioncomment-3466687.
                       let cmd_duration = if $env.CMD_DURATION_MS == "0823" { 0 } else { $env.CMD_DURATION_MS };
-                      ^${config.home.homeDirectory}/.nix-profile/bin/starship prompt
+                      ^starship prompt
                           --right
                           --cmd-duration $cmd_duration
                           $"--status=($env.LAST_EXIT_CODE)"

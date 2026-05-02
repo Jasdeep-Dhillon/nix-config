@@ -1,14 +1,18 @@
-{ self, ... }:
+{ self, inputs, ... }:
 {
-  flake.nixosModules.dev =
-    { ... }:
-    {
-      imports = [ self.nixosModules.vcs ];
+  flake.nixosModules.dev = {
+    imports = [
+      inputs.home-manager.nixosModules.default
+      self.nixosModules.vcs
+    ];
+    home-manager.users.arc = {
+      imports = [ self.homeModules.vcs ];
     };
-
+  };
   flake.nixosModules.vcs =
     { pkgs, ... }:
     {
+
       environment.systemPackages = with pkgs; [
         jj
       ];

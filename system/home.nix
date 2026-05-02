@@ -9,13 +9,10 @@
     {
       imports = [ inputs.home-manager.nixosModules.default ];
       home-manager = {
-        # useGlobalPkgs = true;
         useUserPackages = true;
         backupFileExtension = "bak";
-        # users.arc = self.homeModules.imports;
         users.arc.home.stateVersion = "26.05";
       };
-
     };
 
   flake.homeConfigurations.arc = inputs.home-manager.lib.homeManagerConfiguration {

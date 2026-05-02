@@ -12,7 +12,7 @@
       settings
       user
       ssh-server
-      jellyfin
+      jellyfin-server
       nvidia
       vcs
       programs

@@ -1,8 +1,12 @@
-{ ... }:
+{ self, inputs, ... }:
 {
   flake.nixosModules.dev =
     { pkgs, ... }:
     {
+      imports = [ inputs.home-manager.nixosModules.default ];
+      home-manager.users.arc = {
+        imports = [ self.homeModules.tools ];
+      };
       environment.systemPackages = with pkgs; [
         fd
         zellij
@@ -11,7 +15,7 @@
       ];
     };
 
-  flake.homeModules.devApps =
+  flake.homeModules.tools =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [

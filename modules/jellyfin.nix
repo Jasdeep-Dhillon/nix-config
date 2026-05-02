@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosModules.jellyfin =
+  flake.nixosModules.jellyfin-server =
     { pkgs, ... }:
     {
       services.jellyfin = {
@@ -13,5 +13,11 @@
         jellyfin-web
         jellyfin-ffmpeg
       ];
+    };
+
+  flake.nixosModules.jellyfin-client =
+    { pkgs, ... }:
+    {
+      environment.systemPackages = [ pkgs.jellyfin-desktop ];
     };
 }

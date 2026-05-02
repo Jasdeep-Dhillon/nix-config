@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ ... }:
 {
   flake.nixosModules.user =
     { pkgs, ... }:
@@ -15,11 +15,6 @@
           "gamemode"
           "kvm"
         ];
-
-        packages = [
-          inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.default
-        ];
-
         shell = pkgs.nushell;
       };
     };

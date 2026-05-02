@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, inputs, ... }:
 {
   flake.nixosModules.base = {
     imports = with self.nixosModules; [
@@ -13,7 +13,11 @@
       services
       settings
       user
+      inputs.home-manager.nixosModules.default
     ];
+    home-manager.users.arc = {
+      imports = [ self.homeModules.base ];
+    };
   };
 
   flake.homeModules.base = {

@@ -48,7 +48,7 @@
           Plugins = "appimagethumbnail,audiothumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,opendocumentthumbnail,svgthumbnail,textthumbnail";
         };
       };
-      
+
       home.packages = with pkgs; [
         kdePackages.qt6ct
         libsForQt5.qt5ct
@@ -58,6 +58,7 @@
         autoEnable = true;
         base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
         polarity = "dark";
+        targets.dank-material-shell.enable = false;
         targets.qt = {
           enable = false;
           platform = "qtct";

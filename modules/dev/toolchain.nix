@@ -1,5 +1,11 @@
-{ ... }:
+{ self, inputs, ... }:
 {
+  flake.nixosModules.dev = {
+    imports = [ inputs.home-manager.nixosModules.default ];
+    home-manager.users.arc = {
+      imports = [ self.homeModules.toolchain ];
+    };
+  };
   flake.homeModules.toolchain =
     { pkgs, ... }:
     {

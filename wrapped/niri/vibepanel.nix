@@ -14,6 +14,7 @@
           popover_offset = 4;
           background_opacity = 0.75;
           background_color = "#1e1e2e";
+          outline = false;
         };
         widgets = {
           left = [
@@ -30,6 +31,7 @@
             "battery"
             "quick_settings"
           ];
+          outline = false;
           border_radius = 60;
           background_opacity = 0.7;
           background_color = "#1e1e2e";
@@ -61,7 +63,9 @@
           animations = true;
           ripple = false;
           blur = true;
-          outline = false;
+          outline = true;
+          outline_width = 2;
+          outline_opacity = 0.8;
           icons = {
             theme = "material";
             weight = 400;
@@ -125,9 +129,12 @@
         };
       };
       settings.binds = {
-        "Mod+F5" = {
-          spawn = [
+        "Mod+F5" = _: {
+          props.hotkey-overlay-title = "Restart Panel";
+          content.spawn = [
             (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
+            "--config"
+            "${vibepanel}"
           ];
         };
         "Mod+Space" = _: {
@@ -215,6 +222,7 @@
         };
         "Mod+XF86AudioRaiseVolume" = _: {
           props.allow-when-locked = true;
+          props.hotkey-overlay-title = "Increase Brightness";
           content.spawn = [
             (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "brightness"
@@ -224,6 +232,7 @@
         };
         "Mod+XF86AudioLowerVolume" = _: {
           props.allow-when-locked = true;
+          props.hotkey-overlay-title = "Decrease Brightness";
           content.spawn = [
             (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "brightness"
@@ -295,13 +304,14 @@
       settings.layer-rules = [
         {
           matches = [
-            # { layer = "overlay"; }
-            { namespace = "launcher"; }
+            { layer = "overlay"; }
+            # { namespace = "launcher"; }
           ];
           background-effect = {
             blur = true;
             xray = true;
           };
+          geometry-corner-radius = 12;
         }
       ];
     };

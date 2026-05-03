@@ -49,12 +49,9 @@
       "Mod+Shift+Q" = {
         close-window = { };
       };
-      "Mod+Ctrl+Q" = {
-        spawn = [
-          "pkill"
-          "-9"
-          "gamescope"
-        ];
+      "Mod+Ctrl+Q" = _: {
+        props.hotkey-overlay-title = "Force Kill Selected Application";
+        content.spawn-sh = "kill $(niri msg --json pick-window | jq .pid)";
       };
     };
   };

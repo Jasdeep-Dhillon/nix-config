@@ -2,89 +2,6 @@
 {
   flake.nixosModules.niriShell =
     { pkgs, lib, ... }:
-    let
-      vibepanel = (pkgs.formats.toml { }).generate "vibepanel.toml" {
-        bar = {
-          position = "top";
-          size = 30;
-          spacing = 2;
-          inset = 8;
-          screen_margin = 4;
-          border_radius = 60;
-          popover_offset = 4;
-          background_opacity = 0.75;
-          background_color = "#1e1e2e";
-          outline = false;
-        };
-        widgets = {
-          left = [
-            "custom-fuzzel"
-            "media"
-            "clock"
-          ];
-          center = [ "taskbar" ];
-          right = [
-            "tray"
-            "custom-clipboard"
-            "notifications"
-            "cpu"
-            "battery"
-            "quick_settings"
-          ];
-          outline = false;
-          border_radius = 60;
-          background_opacity = 0.7;
-          background_color = "#1e1e2e";
-          popover_background_opacity = 0.9;
-          clock = {
-            format = "%I:%M %p • %A, %b %-d";
-          };
-          media = {
-            visualizer = true;
-          };
-          custom-fuzzel = {
-            icon = "apps";
-            # label = "Launcher";
-            tooltip = "Fuzzel";
-            on_click = "pkill -x fuzzel || ${
-              lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.fuzzel
-            }";
-          };
-          custom-clipboard = {
-            icon = "content_paste";
-            tooltip = "Clipboard";
-            on_click = "kitty --class clipse -e ${lib.getExe pkgs.clipse}";
-          };
-        };
-        theme = {
-          mode = "auto";
-          scheme = "dark";
-          accent = "#b4befe";
-          animations = true;
-          ripple = false;
-          blur = true;
-          outline = true;
-          outline_width = 2;
-          outline_opacity = 0.8;
-          icons = {
-            theme = "material";
-            weight = 400;
-          };
-          states = {
-            success = "#a6e3a1";
-            warning = "#f9e2af";
-            urgent = "#f38ba8";
-          };
-          typography.font_family = "Inter";
-        };
-        osd = {
-          enabled = true;
-          position = "bottom";
-          show_value = true;
-        };
-        advanced.compositor = "niri";
-      };
-    in
     {
       extraPackages = [
         inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -102,39 +19,27 @@
           "fill"
         ]
         [
-          (lib.getExe pkgs.runapp)
           (lib.getExe pkgs.clipse)
           "-listen"
         ]
         [
-          # (lib.getExe pkgs.runapp)
-          (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
-          "--config"
-          "${vibepanel}"
+          (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.vibepanel)
         ]
       ];
 
       settings.switch-events = {
         lid-close = {
-          spawn = [
-            "${pkgs.libnotify}/bin/notify-send"
-            "Laptop Closed"
-          ];
+          spawn = [ ];
         };
         lid-open = {
-          spawn = [
-            "${pkgs.libnotify}/bin/notify-send"
-            "Laptop Opened"
-          ];
+          spawn = [ ];
         };
       };
       settings.binds = {
         "Mod+F5" = _: {
           props.hotkey-overlay-title = "Restart Panel";
           content.spawn = [
-            (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
-            "--config"
-            "${vibepanel}"
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.vibepanel)
           ];
         };
         "Mod+Space" = _: {
@@ -143,9 +48,6 @@
           content.spawn-sh = "pkill -x fuzzel || ${
             lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.fuzzel
           }";
-          # [
-          #   (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.fuzzel)
-          # ];
         };
         "Mod+V" = _: {
           props.repeat = false;
@@ -162,7 +64,10 @@
           props.repeat = false;
           props.hotkey-overlay-title = "Command Runner";
           content.spawn-sh = ''
-            sh -c "$(fuzzel -d -p $: )"
+            pkill -x fuzzel ||
+            sh -c "$(${
+              lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.fuzzel
+            } --lines 0 -d -p 'Run: ')"
           '';
         };
         "Mod+Period" = _: {
@@ -183,7 +88,7 @@
         #   props.repeat = false;
         #   props.hotkey-overlay-title = "Power Menu";
         #   content.spawn = [
-        #     (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
+        #     (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.vibepanel)
         #     "ipc"
         #     "call"
         #     "powermenu"
@@ -194,7 +99,7 @@
           props.repeat = false;
           props.hotkey-overlay-title = "Quick Settings";
           content.spawn = [
-            (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.vibepanel)
             "popover"
             "toggle"
             "quick_settings"
@@ -204,7 +109,7 @@
           props.repeat = false;
           props.hotkey-overlay-title = "Notifications";
           content.spawn = [
-            (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.vibepanel)
             "popover"
             "toggle"
             "notifications"
@@ -214,7 +119,7 @@
         XF86MonBrightnessUp = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.vibepanel)
             "brightness"
             "inc"
             "2"
@@ -224,7 +129,7 @@
           props.allow-when-locked = true;
           props.hotkey-overlay-title = "Increase Brightness";
           content.spawn = [
-            (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.vibepanel)
             "brightness"
             "inc"
             "2"
@@ -234,7 +139,7 @@
           props.allow-when-locked = true;
           props.hotkey-overlay-title = "Decrease Brightness";
           content.spawn = [
-            (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.vibepanel)
             "brightness"
             "dec"
             "2"
@@ -243,7 +148,7 @@
         XF86MonBrightnessDown = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.vibepanel)
             "brightness"
             "dec"
             "2"
@@ -252,7 +157,7 @@
         XF86AudioPlay = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.vibepanel)
             "media"
             "play-pause"
           ];
@@ -260,7 +165,7 @@
         XF86AudioStop = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.vibepanel)
             "media"
             "stop"
           ];
@@ -268,7 +173,7 @@
         XF86AudioPrev = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.vibepanel)
             "media"
             "previous"
           ];
@@ -276,7 +181,7 @@
         XF86AudioNext = _: {
           props.allow-when-locked = true;
           content.spawn = [
-            (lib.getExe inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default)
+            (lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.vibepanel)
             "media"
             "next"
           ];

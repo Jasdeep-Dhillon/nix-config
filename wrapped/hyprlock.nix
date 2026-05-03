@@ -78,7 +78,7 @@
 
           image {
               monitor =
-              path = "${self.avatar}"
+              path = ${self.avatar}
               size = 280 # lesser side if not 1:1 ratio
               rounding = -1 # negative values mean circle
               border_size = 0

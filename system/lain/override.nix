@@ -17,7 +17,7 @@
         graphics.extraPackages = with pkgs; [ intel-media-driver ];
         nvidia = {
           open = lib.mkForce false;
-          package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+          package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.legacy_580;
           powerManagement.enable = lib.mkForce false;
           nvidiaPersistenced = true;
           prime = {

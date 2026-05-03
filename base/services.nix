@@ -30,11 +30,4 @@
       #media-session.enable = true;
     };
   };
-
-  flake.homeModules.services =
-    { ... }:
-    {
-      services.kdeconnect.enable = true;
-      services.hyprpolkitagent.enable = true;
-    };
 }

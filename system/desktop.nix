@@ -13,9 +13,10 @@
 
   flake.homeModules.desktop = {
     imports = with self.homeModules; [
-      services
       shortcuts
       theme
     ];
+    services.kdeconnect.enable = true;
+    services.hyprpolkitagent.enable = true;
   };
 }

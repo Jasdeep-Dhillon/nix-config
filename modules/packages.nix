@@ -17,6 +17,8 @@
         bazaar
         yazi
         s-tui
+        nix-tree
+        nix-output-monitor
       ];
       home-manager.users.arc = {
         imports = [ self.homeModules.packages ];
@@ -51,6 +53,7 @@
         pear-desktop
         easyeffects
         jellyfin-desktop
+        pinta
         inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
     };

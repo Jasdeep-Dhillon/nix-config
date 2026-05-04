@@ -7,28 +7,24 @@
         inherit pkgs;
         events = {
           after-resume = "niri msg action power-on-monitors";
-          # before-sleep = "";
-          idlehint = 300;
+          before-sleep = "pidof hyprlock || ${
+            lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.hyprlock
+          }";
+          idlehint = 900;
           lock = "${lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.hyprlock}";
           # unlock = "";
         };
-        extraArgs = [ "-w" ];
+        # extraArgs = [ "-d" ];
         timeouts = [
           {
-            timeout = 900;
-            command = "${lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.hyprlock}";
+            timeout = 850;
+            command = "pidof hyprlock || ${
+              lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.hyprlock
+            }";
           }
           {
             timeout = 900;
             command = "niri msg action power-off-monitors";
-          }
-          {
-            timeout = 900;
-            command = "systemctl suspend-then-hibernate";
-          }
-          {
-            timeout = 850;
-            command = ''${pkgs.libnotify}/bin/notify-send "Going to sleep soon"'';
           }
         ];
       };

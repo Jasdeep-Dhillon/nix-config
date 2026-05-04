@@ -6,6 +6,7 @@
       extraPackages = [
         inputs.vibepanel.packages.${pkgs.stdenv.hostPlatform.system}.default
         self.packages.${pkgs.stdenv.hostPlatform.system}.fuzzel
+        pkgs.swaybg
       ];
       settings.spawn-at-startup = [
         [
@@ -204,6 +205,12 @@
             { proportion = 0.3; }
           ];
           open-floating = true;
+        }
+        {
+          matches = [ { title = "Media Player"; } ];
+          focus-ring = {
+            off = { };
+          };
         }
       ];
       settings.layer-rules = [

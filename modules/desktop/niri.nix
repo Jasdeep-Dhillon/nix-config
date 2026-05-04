@@ -8,9 +8,14 @@
         window-manager
         theme
       ];
-      security.pam.services.hyprlock = {};
+      security.pam.services.hyprlock = { };
       services.gnome.gnome-keyring.enable = true;
       services.displayManager.defaultSession = "niri";
+      services.logind.settings.Login = {
+        KillUserProcesses = true;
+        IdleActionSec = 1800;
+        IdleAction = "suspend-then-hibernate";
+      };
       programs.niri = {
         enable = true;
         package = self.packages.${pkgs.stdenv.hostPlatform.system}.niri;

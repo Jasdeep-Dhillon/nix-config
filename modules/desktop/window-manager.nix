@@ -13,6 +13,7 @@
         nautilus
         kdePackages.ark
         kdePackages.dolphin
+        waypaper
       ];
 
       environment.etc."/xdg/menus/applications.menu".text =

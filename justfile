@@ -1,7 +1,8 @@
 alias s := switch-legion
+alias l := switch-lain
 alias t := test-legion
 alias u := update-all
-alias sh := switch-home
+# alias sh := switch-home
 
 # Update all flake inputs
 update-all:
@@ -9,15 +10,15 @@ update-all:
 
 # Update specificied input
 update INPUT:
-    nix flake update {{ INPUT }}
+    nix flake update {{ INPUT }} --commit-lock-file
 
 # Check flake configuration
 check:
     nix flake check
 
 # Check Home manager configuration
-check-home:
-    home-manager --dry-run switch --flake .
+# check-home:
+#     home-manager --dry-run switch --flake .
 
 # Check flake with show-trace
 trace-check:
@@ -43,13 +44,17 @@ boot-lain:
 trace-switch-legion:
     sudo nixos-rebuild switch --flake .#legion --show-trace
 
+# Switch lain generation with show-trace
+trace-switch-lain:
+    sudo nixos-rebuild switch --flake .#lain --show-trace
+
 # Switch home manager generation
-switch-home:
-    home-manager switch  --flake .
+# switch-home:
+#     home-manager switch  --flake .
 
 # Switch home manager generation with show-trace
-trace-switch-home:
-    home-manager switch  --flake . --show-trace
+# trace-switch-home:
+#     home-manager switch  --flake . --show-trace
 
 # Test legion configuration
 test-legion:

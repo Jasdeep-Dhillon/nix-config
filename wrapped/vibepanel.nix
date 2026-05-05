@@ -49,7 +49,7 @@
               position = "top";
               size = 30;
               spacing = 2;
-              inset = 8;
+              inset = 4;
               screen_margin = 4;
               border_radius = 60;
               popover_offset = 4;

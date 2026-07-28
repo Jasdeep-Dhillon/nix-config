@@ -55,6 +55,7 @@
           pinta
           gnome-disk-utility
           drawy
+          imhex
           inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
         ]
         ++ (with pkgs.kdePackages; [

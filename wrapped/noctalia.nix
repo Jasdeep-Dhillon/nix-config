@@ -118,8 +118,10 @@
                 "taskbar"
               ];
               dead_zone = {
-                scroll_up_command = "niri msg action focus-workspace-up";
-                scroll_down_command = "niri msg action focus-workspace-down";
+                actions = {
+                  scroll_up = "exec niri msg action focus-workspace-up";
+                  scroll_down = "exec niri msg action focus-workspace-down";
+                };
               };
               end = [
                 "tray"
@@ -334,8 +336,13 @@
             clock = {
               format = " {:%A, %B %e } • {:%I:%M %P} ";
             };
-            volume.scroll_step = 1;
-            volume.show_label = false;
+            volume = {
+              actions = {
+                scroll_up = "volume-up 1%";
+                scroll_down = "volume-down 1%";
+              };
+              show_label = false;
+            };
             brightness.show_label = false;
             battery = {
               show_label = false;

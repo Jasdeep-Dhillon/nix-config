@@ -17,6 +17,7 @@
               MANGOHUD = true;
               PROTON_DISCORD_BRIDGE = true;
               PROTON_ENABLE_WAYLAND = true;
+              PROTON_USE_WOW64 = true;
             };
           }
         );

@@ -56,7 +56,7 @@
           gnome-disk-utility
           drawy
           imhex
-          inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
+          inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.helium-widevine
         ]
         ++ (with pkgs.kdePackages; [
           okular

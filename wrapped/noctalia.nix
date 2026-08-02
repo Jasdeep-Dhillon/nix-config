@@ -386,7 +386,7 @@
             };
             workspaces = {
               capsule = true;
-              display = "none";
+              show_labels = false;
               empty_color = "on_primary";
               occupied_color = "primary";
             };

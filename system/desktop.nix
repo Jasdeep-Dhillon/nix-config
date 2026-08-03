@@ -48,6 +48,7 @@
     imports = with self.homeModules; [
       shortcuts
       theme
+      browser
     ];
     services.kdeconnect.enable = true;
   };

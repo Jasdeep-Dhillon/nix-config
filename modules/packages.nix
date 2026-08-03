@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ self, ... }:
 {
   flake.nixosModules.packages =
     { pkgs, ... }:
@@ -56,7 +56,6 @@
           gnome-disk-utility
           drawy
           imhex
-          inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.helium-widevine
         ]
         ++ (with pkgs.kdePackages; [
           okular

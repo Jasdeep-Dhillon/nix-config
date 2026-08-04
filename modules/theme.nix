@@ -29,7 +29,10 @@
     in
     {
       imports = [ inputs.stylix.homeModules.stylix ];
-      home.file."Pictures/Wallpapers".source = ../wallpapers;
+      home.file."Pictures/Wallpapers" = {
+        source = ../wallpapers;
+        recursive = true;
+      };
 
       xdg.configFile.dolphinrc.source = (pkgs.formats.ini { }).generate "dolphinrc" {
         ContextMenu = {

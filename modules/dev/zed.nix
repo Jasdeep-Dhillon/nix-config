@@ -10,6 +10,7 @@
     {
       programs.zed-editor = {
         enable = true;
+        package = pkgs.zed-editor-fhs;
         extensions = [
           "html"
           "toml"

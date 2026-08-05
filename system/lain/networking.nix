@@ -17,7 +17,14 @@
         tag = "latest";
         copyToRoot = [ caddyWithPlugin ];
         config = {
-          Entrypoint = [ "${caddyWithPlugin}/bin/caddy" "run" "--config" "/etc/caddy/Caddyfile" "--adapter" "caddyfile" ];
+          Entrypoint = [
+            "${caddyWithPlugin}/bin/caddy"
+            "run"
+            "--config"
+            "/etc/caddy/Caddyfile"
+            "--adapter"
+            "caddyfile"
+          ];
         };
       };
       caddyfile = pkgs.writeText "Caddyfile" ''

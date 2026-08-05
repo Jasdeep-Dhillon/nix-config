@@ -8,6 +8,7 @@
         flatpak
         fonts
         scheduler
+        jellyfin-client
         self.nixosModules.guiPrograms
       ];
       systemd.user.services.tailscale-systray = {

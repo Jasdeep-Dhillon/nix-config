@@ -449,192 +449,196 @@
           projects = "cd /media/Storage/Projects";
         };
 
-        # Carapace & Starship module
-        extraConfig = ''
-          $env.PATH = ($env.PATH | split row (char esep) | where { $in != "${config.home.homeDirectory}/.config/carapace/bin" } | prepend "${config.home.homeDirectory}/.config/carapace/bin")
+        # Carapace, Devenv and Starship Scripts
+        extraConfig =
+          # Carapace
+          ''
+            $env.PATH = ($env.PATH | split row (char esep) | where { $in != "${config.home.homeDirectory}/.config/carapace/bin" } | prepend "${config.home.homeDirectory}/.config/carapace/bin")
 
-          def --env get-env [name] { $env | get $name }
-          def --env set-env [name, value] { load-env { $name: $value } }
-          def --env unset-env [name] { hide-env $name }
+            def --env get-env [name] { $env | get $name }
+            def --env set-env [name, value] { load-env { $name: $value } }
+            def --env unset-env [name] { hide-env $name }
 
-          let carapace_completer = {|spans|
-            load-env {
-            	CARAPACE_SHELL_BUILTINS: (help commands | where category != "" | get name | each { split row " " | first } | uniq  | str join "\n")
-            	CARAPACE_SHELL_FUNCTIONS: (help commands | where category == "" | get name | each { split row " " | first } | uniq  | str join "\n")
-            }
-
-            # if the current command is an alias, get it's expansion
-            let expanded_alias = (scope aliases | where name == $spans.0 | $in.0?.expansion?)
-
-            # overwrite
-            let spans = (if $expanded_alias != null  {
-              # put the first word of the expanded alias first in the span
-              $spans | skip 1 | prepend ($expanded_alias | split row " " | take 1)
-            } else {
-              $spans | skip 1 | prepend ($spans.0)
-            })
-
-            carapace $spans.0 nushell ...$spans
-            | from json
-          }
-
-          mut current = (($env | default {} config).config | default {} completions)
-          $current.completions = ($current.completions | default {} external)
-          $current.completions.external = ($current.completions.external
-          | default true enable
-          # backwards compatible workaround for default, see nushell #15654
-          | upsert completer { if $in == null { $carapace_completer } else { $in } })
-
-          $env.config = $current
-        ''
-        + ''
-          # devenv hook for nushell
-          # Usage: Add to your config.nu:
-          #   source (devenv hook nu | save --force ~/.cache/devenv/hook.nu; "~/.cache/devenv/hook.nu")
-          # Or: devenv hook nu | save --force ~/.cache/devenv/hook.nu
-          #     source ~/.cache/devenv/hook.nu
-
-          $env._DEVENV_HOOK_UNTRUSTED = ""
-
-          $env.config = ($env.config | upsert hooks.env_change.PWD (
-              ($env.config | get -o hooks.env_change.PWD | default []) | append {||
-                  # Inside devenv shell: exit when leaving the project directory
-                  if ("DEVENV_ROOT" in $env) {
-                      if not ($env.PWD == $env.DEVENV_ROOT or ($env.PWD | str starts-with ($env.DEVENV_ROOT + "/"))) {
-                          # Save target directory so the parent shell can cd there after exit
-                          $env.PWD | save --force ($env.DEVENV_ROOT + "/.devenv/exit-dir")
-                          exit
-                      }
-                      return
-                  }
-
-                  let result = (^devenv hook-should-activate | complete)
-
-                  if ($result.stderr | str trim) != "" {
-                      print -e $result.stderr
-                  }
-
-                  if $result.exit_code == 0 {
-                      let dir = ($result.stdout | str trim)
-                      if $dir != "" {
-                          do { cd $dir; ^devenv shell }
-                          $env._DEVENV_HOOK_UNTRUSTED = ""
-                          # If the devenv shell exited due to cd outside the project, follow the user there
-                          let exit_dir_file = ($dir + "/.devenv/exit-dir")
-                          if ($exit_dir_file | path exists) {
-                              let target_dir = (open $exit_dir_file | str trim)
-                              rm -f $exit_dir_file
-                              if ($target_dir | path exists) {
-                                  cd $target_dir
-                              }
-                          }
-                      } else {
-                          $env._DEVENV_HOOK_UNTRUSTED = ""
-                      }
-                  } else {
-                      $env._DEVENV_HOOK_UNTRUSTED = $env.PWD
-                  }
-              }
-          ))
-
-          # Retry activation on each prompt for untrusted directories (after 'devenv allow')
-          $env.config = ($env.config | upsert hooks.pre_prompt (
-              ($env.config | get -o hooks.pre_prompt | default []) | append {||
-                  let untrusted = ($env | get -o _DEVENV_HOOK_UNTRUSTED | default "")
-                  if $untrusted == "" {
-                      return
-                  }
-                  if ("DEVENV_ROOT" in $env) {
-                      return
-                  }
-
-                  let result = (^devenv hook-should-activate | complete)
-
-                  if $result.exit_code == 0 {
-                      let dir = ($result.stdout | str trim)
-                      if $dir != "" {
-                          do { cd $dir; ^devenv shell }
-                          $env._DEVENV_HOOK_UNTRUSTED = ""
-                          # If the devenv shell exited due to cd outside the project, follow the user there
-                          let exit_dir_file = ($dir + "/.devenv/exit-dir")
-                          if ($exit_dir_file | path exists) {
-                              let target_dir = (open $exit_dir_file | str trim)
-                              rm -f $exit_dir_file
-                              if ($target_dir | path exists) {
-                                  cd $target_dir
-                              }
-                          }
-                      }
-                  }
-              }
-          ))
-
-          # Strip out devenv's forced prompt modifications on startup
-          $env.config = ($env.config | upsert hooks.pre_prompt (
-              ($env.config | get -o hooks.pre_prompt | default []) | append {||
-                  if ("DEVENV_ROOT" in $env) {
-                      # Reset the prompt back to clean Starship, ignoring devenv's injection
-                      $env.PROMPT_COMMAND = {|| starship prompt --cmd-duration $env.CMD_DURATION_MS $"--status=($env.LAST_EXIT_CODE)" }
-                      $env.PROMPT_COMMAND_RIGHT = {|| starship prompt --right }
-                  }
-              }
-          ))
-        ''
-        + ''
-          export-env { $env.STARSHIP_SHELL = "nu"; load-env {
-              STARSHIP_SESSION_KEY: (random chars -l 16)
-              PROMPT_MULTILINE_INDICATOR: (
-                  ^starship prompt --continuation
-              )
-
-              # Does not play well with default character module.
-              # TODO: Also Use starship vi mode indicators?
-              PROMPT_INDICATOR: ""
-
-              PROMPT_COMMAND: {||
-                  (
-                      # The initial value of `$env.CMD_DURATION_MS` is always `0823`, which is an official setting.
-                      # See https://github.com/nushell/nushell/discussions/6402#discussioncomment-3466687.
-                      let cmd_duration = if $env.CMD_DURATION_MS == "0823" { 0 } else { $env.CMD_DURATION_MS };
-                      ^starship prompt
-                          --cmd-duration $cmd_duration
-                          $"--status=($env.LAST_EXIT_CODE)"
-                          --terminal-width (term size).columns
-                          ...(
-                              if (which "job list" | where type == built-in | is-not-empty) {
-                                  ["--jobs", (job list | length)]
-                              } else {
-                                  []
-                              }
-                          )
-                  )
+            let carapace_completer = {|spans|
+              load-env {
+              	CARAPACE_SHELL_BUILTINS: (help commands | where category != "" | get name | each { split row " " | first } | uniq  | str join "\n")
+              	CARAPACE_SHELL_FUNCTIONS: (help commands | where category == "" | get name | each { split row " " | first } | uniq  | str join "\n")
               }
 
-              config: ($env.config? | default {} | merge {
-                  render_right_prompt_on_last_line: true
+              # if the current command is an alias, get it's expansion
+              let expanded_alias = (scope aliases | where name == $spans.0 | $in.0?.expansion?)
+
+              # overwrite
+              let spans = (if $expanded_alias != null  {
+                # put the first word of the expanded alias first in the span
+                $spans | skip 1 | prepend ($expanded_alias | split row " " | take 1)
+              } else {
+                $spans | skip 1 | prepend ($spans.0)
               })
 
-              PROMPT_COMMAND_RIGHT: {||
-                  (
-                      # The initial value of `$env.CMD_DURATION_MS` is always `0823`, which is an official setting.
-                      # See https://github.com/nushell/nushell/discussions/6402#discussioncomment-3466687.
-                      let cmd_duration = if $env.CMD_DURATION_MS == "0823" { 0 } else { $env.CMD_DURATION_MS };
-                      ^starship prompt
-                          --right
-                          --cmd-duration $cmd_duration
-                          $"--status=($env.LAST_EXIT_CODE)"
-                          --terminal-width (term size).columns
-                          ...(
-                              if (which "job list" | where type == built-in | is-not-empty) {
-                                  ["--jobs", (job list | length)]
-                              } else {
-                                  []
-                              }
-                          )
-                  )
-              }
-          }}
-        '';
+              carapace $spans.0 nushell ...$spans
+              | from json
+            }
+
+            mut current = (($env | default {} config).config | default {} completions)
+            $current.completions = ($current.completions | default {} external)
+            $current.completions.external = ($current.completions.external
+            | default true enable
+            # backwards compatible workaround for default, see nushell #15654
+            | upsert completer { if $in == null { $carapace_completer } else { $in } })
+
+            $env.config = $current
+          ''
+          # Devenv
+          + ''
+            # devenv hook for nushell
+            # Usage: Add to your config.nu:
+            #   source (devenv hook nu | save --force ~/.cache/devenv/hook.nu; "~/.cache/devenv/hook.nu")
+            # Or: devenv hook nu | save --force ~/.cache/devenv/hook.nu
+            #     source ~/.cache/devenv/hook.nu
+
+            $env._DEVENV_HOOK_UNTRUSTED = ""
+
+            $env.config = ($env.config | upsert hooks.env_change.PWD (
+                ($env.config | get -o hooks.env_change.PWD | default []) | append {||
+                    # Inside devenv shell: exit when leaving the project directory
+                    if ("DEVENV_ROOT" in $env) {
+                        if not ($env.PWD == $env.DEVENV_ROOT or ($env.PWD | str starts-with ($env.DEVENV_ROOT + "/"))) {
+                            # Save target directory so the parent shell can cd there after exit
+                            $env.PWD | save --force ($env.DEVENV_ROOT + "/.devenv/exit-dir")
+                            exit
+                        }
+                        return
+                    }
+
+                    let result = (^devenv hook-should-activate | complete)
+
+                    if ($result.stderr | str trim) != "" {
+                        print -e $result.stderr
+                    }
+
+                    if $result.exit_code == 0 {
+                        let dir = ($result.stdout | str trim)
+                        if $dir != "" {
+                            do { cd $dir; ^devenv shell }
+                            $env._DEVENV_HOOK_UNTRUSTED = ""
+                            # If the devenv shell exited due to cd outside the project, follow the user there
+                            let exit_dir_file = ($dir + "/.devenv/exit-dir")
+                            if ($exit_dir_file | path exists) {
+                                let target_dir = (open $exit_dir_file | str trim)
+                                rm -f $exit_dir_file
+                                if ($target_dir | path exists) {
+                                    cd $target_dir
+                                }
+                            }
+                        } else {
+                            $env._DEVENV_HOOK_UNTRUSTED = ""
+                        }
+                    } else {
+                        $env._DEVENV_HOOK_UNTRUSTED = $env.PWD
+                    }
+                }
+            ))
+
+            # Retry activation on each prompt for untrusted directories (after 'devenv allow')
+            $env.config = ($env.config | upsert hooks.pre_prompt (
+                ($env.config | get -o hooks.pre_prompt | default []) | append {||
+                    let untrusted = ($env | get -o _DEVENV_HOOK_UNTRUSTED | default "")
+                    if $untrusted == "" {
+                        return
+                    }
+                    if ("DEVENV_ROOT" in $env) {
+                        return
+                    }
+
+                    let result = (^devenv hook-should-activate | complete)
+
+                    if $result.exit_code == 0 {
+                        let dir = ($result.stdout | str trim)
+                        if $dir != "" {
+                            do { cd $dir; ^devenv shell }
+                            $env._DEVENV_HOOK_UNTRUSTED = ""
+                            # If the devenv shell exited due to cd outside the project, follow the user there
+                            let exit_dir_file = ($dir + "/.devenv/exit-dir")
+                            if ($exit_dir_file | path exists) {
+                                let target_dir = (open $exit_dir_file | str trim)
+                                rm -f $exit_dir_file
+                                if ($target_dir | path exists) {
+                                    cd $target_dir
+                                }
+                            }
+                        }
+                    }
+                }
+            ))
+
+            # Strip out devenv's forced prompt modifications on startup
+            $env.config = ($env.config | upsert hooks.pre_prompt (
+                ($env.config | get -o hooks.pre_prompt | default []) | append {||
+                    if ("DEVENV_ROOT" in $env) {
+                        # Reset the prompt back to clean Starship, ignoring devenv's injection
+                        $env.PROMPT_COMMAND = {|| starship prompt --cmd-duration $env.CMD_DURATION_MS $"--status=($env.LAST_EXIT_CODE)" }
+                        $env.PROMPT_COMMAND_RIGHT = {|| starship prompt --right }
+                    }
+                }
+            ))
+          ''
+          # Starship
+          + ''
+            export-env { $env.STARSHIP_SHELL = "nu"; load-env {
+                STARSHIP_SESSION_KEY: (random chars -l 16)
+                PROMPT_MULTILINE_INDICATOR: (
+                    ^starship prompt --continuation
+                )
+
+                # Does not play well with default character module.
+                # TODO: Also Use starship vi mode indicators?
+                PROMPT_INDICATOR: ""
+
+                PROMPT_COMMAND: {||
+                    (
+                        # The initial value of `$env.CMD_DURATION_MS` is always `0823`, which is an official setting.
+                        # See https://github.com/nushell/nushell/discussions/6402#discussioncomment-3466687.
+                        let cmd_duration = if $env.CMD_DURATION_MS == "0823" { 0 } else { $env.CMD_DURATION_MS };
+                        ^starship prompt
+                            --cmd-duration $cmd_duration
+                            $"--status=($env.LAST_EXIT_CODE)"
+                            --terminal-width (term size).columns
+                            ...(
+                                if (which "job list" | where type == built-in | is-not-empty) {
+                                    ["--jobs", (job list | length)]
+                                } else {
+                                    []
+                                }
+                            )
+                    )
+                }
+
+                config: ($env.config? | default {} | merge {
+                    render_right_prompt_on_last_line: true
+                })
+
+                PROMPT_COMMAND_RIGHT: {||
+                    (
+                        # The initial value of `$env.CMD_DURATION_MS` is always `0823`, which is an official setting.
+                        # See https://github.com/nushell/nushell/discussions/6402#discussioncomment-3466687.
+                        let cmd_duration = if $env.CMD_DURATION_MS == "0823" { 0 } else { $env.CMD_DURATION_MS };
+                        ^starship prompt
+                            --right
+                            --cmd-duration $cmd_duration
+                            $"--status=($env.LAST_EXIT_CODE)"
+                            --terminal-width (term size).columns
+                            ...(
+                                if (which "job list" | where type == built-in | is-not-empty) {
+                                    ["--jobs", (job list | length)]
+                                } else {
+                                    []
+                                }
+                            )
+                    )
+                }
+            }}
+          '';
       };
       programs.carapace = {
         enable = true;

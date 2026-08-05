@@ -11,8 +11,6 @@
       home.packages = with pkgs; [
         nil
         nixd
-        hyprls
-        kdePackages.qtdeclarative
         jsonfmt
         clang-tools
       ];

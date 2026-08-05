@@ -52,18 +52,17 @@
       };
       programs.gamemode.enable = true;
       environment.systemPackages = with pkgs; [
-        gamescope-wsi
+        # gamescope-wsi
         mangohud
         sgdboop
         winetricks
         wineWow64Packages.unstableFull
-        nero-umu
+        # nero-umu
         faugus-launcher
         protonplus
         (pkgs.prismlauncher.override {
           additionalPrograms = with pkgs; [ libxkbcommon ];
           additionalLibs = with pkgs; [ libxkbcommon ];
-
         })
         # umu-launcher
         # wineWowPackages.staging

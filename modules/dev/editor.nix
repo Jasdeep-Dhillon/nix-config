@@ -6,16 +6,16 @@
     };
   };
   flake.homeModules.editor =
-    { pkgs, ... }:
+    { ... }:
     {
       nixpkgs.config.allowUnfree = true;
       # IDE / Text Editors
-      home.packages = with pkgs; [
-        vscode-fhs
-        jetbrains.clion
-        # jetbrains.datagrip
-        # jetbrains.idea
-      ];
+      # home.packages = with pkgs; [
+      # vscode-fhs
+      # jetbrains.clion
+      # jetbrains.datagrip
+      # jetbrains.idea
+      # ];
       programs.helix = {
         enable = true;
         settings = {

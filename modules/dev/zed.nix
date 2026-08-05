@@ -79,6 +79,7 @@
             after_delay.milliseconds = 400;
           };
           formatter = "auto";
+          format_on_save = "on";
           soft_wrap = "editor_width";
           terminal = {
             font_family = "Maple Mono NL NF";

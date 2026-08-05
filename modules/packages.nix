@@ -34,7 +34,6 @@
           starship-jj
           gnome-calculator
           snapshot
-          zathura
           mission-center
           video-trimmer
           # bitwarden-desktop
@@ -51,7 +50,6 @@
           onlyoffice-desktopeditors
           pear-desktop
           easyeffects
-          jellyfin-desktop
           pinta
           gnome-disk-utility
           drawy

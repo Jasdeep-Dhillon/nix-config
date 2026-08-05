@@ -22,14 +22,13 @@
     {
       home.packages = with pkgs; [
         # GUI Dev Applications
-        github-desktop
+        # github-desktop
         hoppscotch
         gitui
 
         # CLI Packages
         openssl
         ripgrep
-        jujutsu
         jjui
         fzf
         fx

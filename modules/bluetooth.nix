@@ -1,12 +1,12 @@
 { ... }:
 {
-  flake.nixosModules.bluetooth = {
+  flake.nixosModules.bluetooth = { config, lib, ... }: {
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;
       settings = {
         General = {
-          Name = "Legion";
+          Name = lib.strings.toSentenceCase config.networking.hostName;
           Experimental = true;
         };
         Policy = {

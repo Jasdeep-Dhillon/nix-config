@@ -179,7 +179,13 @@
   );
 
   perSystem =
-    { self', inputs', pkgs, lib, ... }:
+    {
+      self',
+      inputs',
+      pkgs,
+      lib,
+      ...
+    }:
     {
       packages.hypridle = self.wrappersModules.hypridle.wrap {
         inherit pkgs;

@@ -9,9 +9,6 @@
       home-manager.users.arc = {
         imports = [ self.homeModules.vcs ];
       };
-      environment.systemPackages = with pkgs; [
-        jj
-      ];
       programs.git = {
         enable = true;
         lfs.enable = true;
@@ -25,12 +22,7 @@
     };
 
   flake.homeModules.vcs =
-    {
-      pkgs,
-      lib,
-      config,
-      ...
-    }:
+    { pkgs, ... }:
     let
       name = "Jasdeep-Dhillon";
       email = "jasdeepsdhillon@proton.me";

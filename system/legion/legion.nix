@@ -18,6 +18,7 @@
       nixld
 
       legion
+      # legion-igpu
       {
         hardware = {
           nvidia = {

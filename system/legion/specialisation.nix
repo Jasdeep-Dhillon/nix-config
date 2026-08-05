@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  flake.nixosModules.legionSpecialisation = {
+  flake.nixosModules.legion-igpu = {
     specialisation = {
       igpu-only.configuration = {
         system.nixos.label = "iGPU-only";

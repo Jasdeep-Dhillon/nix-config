@@ -1,7 +1,14 @@
 { self, ... }:
 {
-  flake.nixosModules.dev = {
+  flake.nixosModules.dev = { pkgs, ... }: {
     imports = [ self.nixosModules.containers ];
+    # Podman Helper applications
+    environment.systemPackages = with pkgs; [
+      podman-tui
+      podman-desktop
+      distrobox
+      distrobox-tui
+    ];
   };
   flake.nixosModules.containers =
     { pkgs, ... }:
@@ -20,13 +27,8 @@
           };
         };
       };
-      # Podman Helper applications
       environment.systemPackages = with pkgs; [
         podman-compose
-        podman-tui
-        podman-desktop
-        distrobox
-        distrobox-tui
       ];
     };
 }

@@ -1,9 +1,9 @@
 { self, ... }:
 {
   flake.nixosModules.dev = {
-    home-manager.users.arc = {
-      imports = [ self.homeModules.toolchain ];
-    };
+    # home-manager.users.arc = {
+    #   imports = [ self.homeModules.toolchain ];
+    # };
     networking.firewall = {
       allowedTCPPorts = [
         3000

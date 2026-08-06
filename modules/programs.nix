@@ -14,7 +14,7 @@
       programs.bat = {
         enable = true;
         settings = {
-          theme = ''"Catppuccin Mocha"'';
+          theme = "Catppuccin Mocha";
         };
       };
       programs.nh = {

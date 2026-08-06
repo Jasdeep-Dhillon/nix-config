@@ -37,6 +37,20 @@
           '';
         };
       };
+      "Mod+Shift+P" = _: {
+        props = {
+          repeat = false;
+          hotkey-overlay-title = "Toggle External Display";
+        };
+        content = {
+          spawn-sh = ''
+            niri msg --json outputs |
+              jq -e '.["DP-1"].current_mode != 1' &&
+              niri msg output DP-1 on ||
+              niri msg output DP-1 off
+          '';
+        };
+      };
       "Mod+grave" = _: {
         props = {
           repeat = false;

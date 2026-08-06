@@ -33,6 +33,8 @@
         enableAllFirmware = true;
       };
       services.logind.settings.Login.HandleLidSwitch = "ignore";
+      services.upower.allowRiskyCriticalPowerAction = true;
+      services.upower.criticalPowerAction = lib.mkForce "Ignore";
       powerManagement.enable = true;
     };
 }

@@ -8,8 +8,8 @@
         scale = 1.33;
         position = _: {
           props = {
-            x = -1920;
-            y = 10;
+            x = 0;
+            y = 0;
           };
         };
         variable-refresh-rate = _: {
@@ -24,8 +24,8 @@
         scale = 1;
         position = _: {
           props = {
-            x = 0;
-            y = 0;
+            x = 1920;
+            y = 120;
           };
         };
         variable-refresh-rate = _: {
@@ -34,6 +34,19 @@
           };
         };
         focus-at-startup = { };
+
+      };
+      "ipad" = {
+        off = { };
+        create-virtual = { };
+        mode = "2388x1688@120";
+        position = _: {
+          props = {
+            x = 1920;
+            y = 1200;
+          };
+        };
+        scale = 2;
       };
     };
   };

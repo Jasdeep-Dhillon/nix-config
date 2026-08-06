@@ -28,6 +28,9 @@
         # middle-emulation = {};
         # scroll-method = "no-scroll";
       };
+      touch = {
+        map-to-output = "ipad";
+      };
     };
   };
 }

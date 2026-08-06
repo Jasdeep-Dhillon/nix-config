@@ -11,6 +11,15 @@
           jq
           kdePackages.kirigami.unwrapped
         ];
+        package = pkgs.niri.overrideAttrs {
+          version = "26.04";
+          src = pkgs.fetchFromGitHub {
+            owner = "willybarret";
+            repo = "niri";
+            rev = "38e760e";
+            hash = "sha256-tcjX4u+lc90IE8HFVsYgVLLOLo/9DugHUizv3dh3tHQ=";
+          };
+        };
         v2-settings = true;
         imports = with self.nixosModules; [
           niriInput

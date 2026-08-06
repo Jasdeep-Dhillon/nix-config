@@ -111,7 +111,7 @@
         move-workspace-to-monitor-up = { };
       };
       "Mod+Ctrl+Down" = {
-        move-workspace-to-monitor-left = { };
+        move-workspace-to-monitor-down = { };
       };
 
       # Mouse Assisted

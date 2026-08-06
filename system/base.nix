@@ -1,18 +1,7 @@
 { self, inputs, ... }:
 {
   flake.nixosModules.base = {
-    imports = with self.nixosModules; [
-      boot
-      lanzaboote
-      locale
-      networking
-      run0
-      services
-      settings
-      sops
-      tpm
-      tailscale
-      user
+    imports = [
       inputs.home-manager.nixosModules.default
     ];
     home-manager = {

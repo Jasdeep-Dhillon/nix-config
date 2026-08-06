@@ -1,5 +1,8 @@
-{ inputs, ... }:
+{ self, inputs, ... }:
 {
+  flake.nixosModules.base = {
+    imports = [ self.nixosModules.sops ];
+  };
   flake.nixosModules.sops =
     { pkgs, config, ... }:
     let

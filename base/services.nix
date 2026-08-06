@@ -1,5 +1,8 @@
-{ ... }:
+{ self, ... }:
 {
+  flake.nixosModules.base = {
+    imports = [ self.nixosModules.services ];
+  };
   flake.nixosModules.services = {
     services.dbus.implementation = "broker";
     services.udisks2 = {

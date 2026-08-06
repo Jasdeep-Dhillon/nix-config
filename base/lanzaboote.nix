@@ -1,5 +1,8 @@
-{ inputs, ... }:
+{ self, inputs, ... }:
 {
+  flake.nixosModules.base = {
+    imports = [ self.nixosModules.lanzaboote ];
+  };
   flake.nixosModules.lanzaboote =
     { lib, ... }:
     {

@@ -1,5 +1,8 @@
-{ ... }:
+{ self, ... }:
 {
+  flake.nixosModules.base = {
+    imports = [ self.nixosModules.tailscale ];
+  };
   flake.nixosModules.tailscale =
     {
       config,

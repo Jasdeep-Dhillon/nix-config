@@ -1,5 +1,8 @@
-{ ... }:
+{ self, ... }:
 {
+  flake.nixosModules.base = {
+    imports = [ self.nixosModules.boot ];
+  };
   flake.nixosModules.boot =
     { pkgs, ... }:
     {

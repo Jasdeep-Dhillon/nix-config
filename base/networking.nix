@@ -1,5 +1,8 @@
-{ ... }:
+{ self, ... }:
 {
+  flake.nixosModules.base = {
+    imports = [ self.nixosModules.networking ];
+  };
   flake.nixosModules.networking = {
     # networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
 

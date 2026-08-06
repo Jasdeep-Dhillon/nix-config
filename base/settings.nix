@@ -1,5 +1,8 @@
-{ ... }:
+{ self, ... }:
 {
+  flake.nixosModules.base = {
+    imports = [ self.nixosModules.settings ];
+  };
   flake.nixosModules.settings = {
     nix.settings = {
       experimental-features = [

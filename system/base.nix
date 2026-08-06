@@ -10,6 +10,7 @@
       services
       settings
       sops
+      tpm
       tailscale
       user
       inputs.home-manager.nixosModules.default

@@ -51,7 +51,7 @@
           '';
         };
       };
-      "Mod+grave" = _: {
+      "Mod+Tab" = _: {
         props = {
           repeat = false;
           hotkey-overlay-title = "Toggle Overview";

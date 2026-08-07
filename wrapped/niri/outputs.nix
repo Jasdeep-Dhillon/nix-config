@@ -37,8 +37,6 @@
 
       };
       "ipad" = {
-        off = { };
-        create-virtual = { };
         mode = "2388x1688@120";
         position = _: {
           props = {

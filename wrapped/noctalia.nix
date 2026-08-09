@@ -143,6 +143,20 @@
               ];
               thickness = 32;
               widget_spacing = 4;
+
+              monitor.ipad = {
+                end = [
+                  "tray"
+                  "group:control"
+                  "control-center"
+                  "ipad_right"
+                ];
+                start = [
+                  "ipad_left"
+                  "launcher"
+                  "media"
+                ];
+              };
             };
           };
           brightness = {
@@ -389,6 +403,16 @@
               show_labels = false;
               empty_color = "on_primary";
               occupied_color = "primary";
+            };
+
+            ipad_left = {
+              type = "spacer";
+              length = 160;
+            };
+
+            ipad_right = {
+              type = "spacer";
+              length = 100;
             };
           };
         };

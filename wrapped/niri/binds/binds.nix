@@ -27,6 +27,7 @@
         props = {
           repeat = false;
           hotkey-overlay-title = "Toggle Laptop Display";
+          allow-when-locked = true;
         };
         content = {
           spawn-sh = ''
@@ -41,6 +42,7 @@
         props = {
           repeat = false;
           hotkey-overlay-title = "Toggle External Display";
+          allow-when-locked = true;
         };
         content = {
           spawn-sh = ''
@@ -61,6 +63,9 @@
         };
       };
       "Mod+Shift+Q" = {
+        close-window = { };
+      };
+      "Alt+F4" = {
         close-window = { };
       };
       "Mod+Ctrl+Q" = _: {

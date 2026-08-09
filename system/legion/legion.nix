@@ -8,6 +8,7 @@
       theme
       bluetooth
       gaming
+      ipad
       nvidia
       sunshine
       udev

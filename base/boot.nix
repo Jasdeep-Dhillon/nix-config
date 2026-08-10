@@ -4,7 +4,7 @@
     imports = [ self.nixosModules.boot ];
   };
   flake.nixosModules.boot =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       boot = {
         kernelPackages = pkgs.linuxPackages_latest;
@@ -20,7 +20,7 @@
 
         # Silent Boot
         consoleLogLevel = 3;
-        loader.timeout = 0;
+        loader.timeout = lib.mkDefault 0;
         initrd.verbose = false;
         kernelParams = [
           "quiet"

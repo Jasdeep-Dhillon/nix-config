@@ -80,3 +80,11 @@ keys:
 # Optimise nix store
 optimise:
     nix store optimise
+
+# Build Legion iso
+build-legion:
+    nh os build-image . -H legion --image-variant iso-installer --accept-flake-config
+
+# Build Host iso
+build: 
+    nh os build-image . --image-variant iso-installer --accept-flake-config

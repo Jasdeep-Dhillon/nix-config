@@ -61,7 +61,6 @@
       url = "github:prankstr/vibepanel";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hypridle.url = "github:hyprwm/hypridle";
   };
 
   outputs =

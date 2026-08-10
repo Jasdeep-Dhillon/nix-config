@@ -15,7 +15,6 @@
           "wheel"
           "video"
           "input"
-          "gamemode"
           "kvm"
         ];
         shell = pkgs.nushell;

@@ -51,6 +51,7 @@
           };
       };
       programs.gamemode.enable = true;
+      users.users.arc.extraGroups = [ "gamemode" ];
       environment.systemPackages = with pkgs; [
         # gamescope-wsi
         mangohud

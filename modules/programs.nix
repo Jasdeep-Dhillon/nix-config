@@ -55,6 +55,11 @@
     {
       programs.kitty = {
         enable = true;
+        autoThemeFiles = {
+          noPreference = "Catppuccin-Mocha";
+          dark = "Catppuccin-Mocha";
+          light = "Catppuccin-Latte";
+        };
         settings = {
           detect_urls = "yes";
           copy_on_select = "yes";

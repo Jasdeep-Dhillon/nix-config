@@ -53,10 +53,6 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     vibepanel = {
       url = "github:prankstr/vibepanel";
       inputs.nixpkgs.follows = "nixpkgs";

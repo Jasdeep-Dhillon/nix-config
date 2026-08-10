@@ -70,7 +70,7 @@
           output = lib.mkOverride 0 config.configDrvOutput;
           relPath = lib.mkOverride 0 "noctalia/palettes/custom.json";
         };
-        package = lib.mkDefault inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        package = lib.mkDefault pkgs.noctalia;
         meta.maintainers = [ "Arc" ];
       };
     }
@@ -80,7 +80,6 @@
     {
       packages.noctalia = self.wrappersModules.noctalia.wrap {
         inherit pkgs;
-        package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
         runtimePkgs = with pkgs; [ mpvpaper ];
         settings = {
           audio = {

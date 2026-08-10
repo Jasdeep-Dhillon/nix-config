@@ -15,6 +15,7 @@
         "@wheel"
       ];
       auto-optimise-store = true;
+      use-xdg-base-directories = true;
     };
     nix.optimise.automatic = true;
     nixpkgs.config.allowUnfree = true;

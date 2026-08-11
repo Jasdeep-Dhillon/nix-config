@@ -14,7 +14,7 @@
 
             boot.supportedFilesystems.zfs = lib.mkImageMediaOverride false;
 
-            users.users.arc.initialPassword = "init";
+            users.users.arc.initialPassword = "";
 
             boot.lanzaboote.enable = lib.mkImageMediaOverride false;
             nixpkgs.config.cudaSupport = lib.mkImageMediaOverride false;

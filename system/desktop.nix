@@ -1,7 +1,12 @@
 { self, ... }:
 {
   flake.nixosModules.desktop =
-    { config, lib, ... }:
+    {
+      pkgs,
+      config,
+      lib,
+      ...
+    }:
     {
       imports = with self.nixosModules; [
         niri
@@ -40,6 +45,9 @@
         allowedUDPPorts = (lib.lists.range 1714 1764);
       };
 
+      # auto mount service
+      services.gvfs.enable = true;
+      services.udev.packages = [ pkgs.libmtp ];
       home-manager.users.arc = {
         imports = [ self.homeModules.desktop ];
       };

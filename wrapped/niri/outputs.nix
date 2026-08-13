@@ -8,7 +8,7 @@
         scale = 1.33;
         position = _: {
           props = {
-            x = 0;
+            x = 1920;
             y = 0;
           };
         };
@@ -24,7 +24,7 @@
         scale = 1;
         position = _: {
           props = {
-            x = 1920;
+            x = 0;
             y = 120;
           };
         };
@@ -40,7 +40,7 @@
         mode = "2778x1940@120";
         position = _: {
           props = {
-            x = 1920;
+            x = 531;
             y = 1200;
           };
         };

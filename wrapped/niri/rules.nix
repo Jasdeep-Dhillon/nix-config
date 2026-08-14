@@ -32,8 +32,15 @@
       }
       {
         matches = [
-          { title = "^Picture-in-picture$"; }
-          { app-id = ''r#"firefox$"# title="^Picture-in-Picture$"''; }
+          { title = "^Picture-in-Picture$"; }
+          {
+            app-id = ''r#"firefox$"#'';
+            title = "^Picture-in-Picture$";
+          }
+          {
+            title = "Extension";
+            app-id = "^zen$";
+          }
         ];
         open-floating = true;
         focus-ring = {

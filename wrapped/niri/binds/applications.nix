@@ -1,4 +1,4 @@
-{ ... }:
+{ inputs, ... }:
 {
   flake.nixosModules.niriApplications =
     { pkgs, lib, ... }:
@@ -23,16 +23,14 @@
           props.repeat = false;
           props.hotkey-overlay-title = "Helium";
           content.spawn = [
-            # (lib.getExe inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default)
-            "helium"
+            (lib.getExe inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default)
           ];
         };
         "Mod+Shift+B" = _: {
           props.repeat = false;
           props.hotkey-overlay-title = "Incognito";
           content.spawn = [
-            # (lib.getExe inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default)
-            "helium"
+            (lib.getExe inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default)
             "--incognito"
           ];
         };
@@ -47,11 +45,26 @@
             (lib.getExe pkgs.pear-desktop)
           ];
         };
-        "Mod+Z" = _: {
+        "Mod+Shift+E" = _: {
           props.repeat = false;
           props.hotkey-overlay-title = "Zed";
           content.spawn = [
             (lib.getExe pkgs.zed-editor)
+          ];
+        };
+        "Mod+Z" = _: {
+          props.repeat = false;
+          props.hotkey-overlay-title = "Zen Browser";
+          content.spawn = [
+            (lib.getExe inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default)
+          ];
+        };
+        "Mod+Shift+Z" = _: {
+          props.repeat = false;
+          props.hotkey-overlay-title = "Zen Private Window";
+          content.spawn = [
+            (lib.getExe inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default)
+            "--private-window"
           ];
         };
         "Ctrl+Shift+Escape" = _: {

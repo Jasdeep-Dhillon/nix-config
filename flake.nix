@@ -53,6 +53,7 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    autolith.url = "github:lambda-symbolics/autolith";
     vibepanel = {
       url = "github:prankstr/vibepanel";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -96,15 +96,8 @@
           { title = "^$"; }
         ];
         matches = [
-          { title = "StellarBlade  "; }
-          { title = "Overwatch"; }
-          { title = "Marvel Rivals"; }
-          { title = "Glace"; }
-          { title = "Clair Obscur: Expedition 33  "; }
-          { app-id = ''r#"^steam_app_[0-9]*"#''; }
-          { title = "Assassin's Creed IV Black Flag"; }
           { app-id = "gamescope"; }
-          { app-id = "Minecraft"; }
+          { app-id = ''r#"^steam_app_[0-9]*"#''; }
           { app-id = "steam_app_default"; }
         ];
         open-fullscreen = true;

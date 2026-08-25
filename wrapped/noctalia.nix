@@ -134,7 +134,9 @@
               radius_bottom_right = 0;
               radius_top_left = 0;
               radius_top_right = 0;
+              reserve_space = false;
               shadow = false;
+              smart_auto_hide = true;
               start = [
                 "launcher"
                 "media"

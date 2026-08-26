@@ -33,6 +33,7 @@
       {
         matches = [
           { title = "^Picture-in-Picture$"; }
+          { title = "^Picture-in-picture$"; }
           {
             app-id = ''r#"firefox$"#'';
             title = "^Picture-in-Picture$";

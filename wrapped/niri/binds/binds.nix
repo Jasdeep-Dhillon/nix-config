@@ -23,7 +23,7 @@
           set-dynamic-cast-monitor = { };
         };
       };
-      "Mod+P" = _: {
+      "Mod+F7" = _: {
         props = {
           repeat = false;
           hotkey-overlay-title = "Toggle Laptop Display";
@@ -33,12 +33,14 @@
           spawn-sh = ''
             niri msg --json outputs |
               jq -e '.["eDP-1"].current_mode != 1' &&
-              niri msg output 'BOE 0x0A9B Unknown' on ||
-              niri msg output 'BOE 0x0A9B Unknown' off
+            niri msg --json outputs |
+              jq -e '.["eDP-2"].current_mode != 0' &&
+            niri msg output 'BOE 0x0A9B Unknown' on ||
+            niri msg output 'BOE 0x0A9B Unknown' off
           '';
         };
       };
-      "Mod+Shift+P" = _: {
+      "Mod+Shift+F7" = _: {
         props = {
           repeat = false;
           hotkey-overlay-title = "Toggle External Display";

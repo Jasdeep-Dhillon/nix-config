@@ -22,7 +22,7 @@
           }
         );
         extraCompatPackages = with pkgs; [
-          (proton-ge-bin.override {
+          (proton-ge-bin.overrideAttrs {
             steamDisplayName = "Nix-Proton-GE";
           })
         ];
@@ -56,8 +56,8 @@
         # gamescope-wsi
         mangohud
         sgdboop
-        winetricks
-        wineWow64Packages.unstableFull
+        # winetricks
+        # wineWow64Packages.unstableFull
         # nero-umu
         faugus-launcher
         protonplus

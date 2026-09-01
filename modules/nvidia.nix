@@ -6,6 +6,7 @@
       services.xserver.videoDrivers = [
         "nvidia"
       ];
+      services.cardwired.enable = true;
       hardware = {
         graphics = {
           enable = true;

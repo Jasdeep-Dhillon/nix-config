@@ -30,7 +30,7 @@
           "rd.systemd.show_status=auto"
           "plymouth.use-simpledrm=0"
         ];
-        kernelModules = [ "ntsync" ];
+        kernelModules = lib.mkAfter [ "ntsync" ];
         supportedFilesystems = {
           btrfs = true;
           ntfs = true;

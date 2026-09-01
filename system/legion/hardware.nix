@@ -23,9 +23,11 @@
         "sd_mod"
       ];
       boot.initrd.kernelModules = [ ];
-      boot.kernelModules = [ "kvm-amd" ];
-      boot.extraModulePackages = [ ];
-
+      boot.extraModulePackages = with pkgs; [ linuxPackages_latest.acpi_call ];
+      boot.kernelModules = lib.mkAfter [
+        "kvm-amd"
+        "acpi_call"
+      ];
       fileSystems."/" = {
         device = "/dev/disk/by-uuid/5133c62f-9d54-49fd-9128-8558a789013a";
         fsType = "btrfs";

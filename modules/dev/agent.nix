@@ -1,15 +1,15 @@
-{ self, inputs, ... }:
+{ self, ... }:
 {
   flake.nixosModules.dev = {
     home-manager.users.arc = {
       imports = [ self.homeModules.agents ];
     };
   };
-  flake.homeModules.agents = { pkgs, ... }: {
+  flake.homeModules.agents = {... }: {
     programs.opencode = {
       enable = true;
       enableMcpIntegration = true;
     };
-    home.packages = [ inputs.autolith.packages.${pkgs.stdenv.hostPlatform.system}.default ];
+    # home.packages = [ inputs.autolith.packages.${pkgs.stdenv.hostPlatform.system}.default ];
   };
 }

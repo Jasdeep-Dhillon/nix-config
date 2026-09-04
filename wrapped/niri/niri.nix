@@ -11,15 +11,22 @@
           jq
           kdePackages.kirigami.unwrapped
         ];
-        package = pkgs.niri.overrideAttrs {
-          version = "26.04";
-          src = pkgs.fetchFromGitHub {
-            owner = "willybarret";
-            repo = "niri";
-            rev = "38e760e";
-            hash = "sha256-tcjX4u+lc90IE8HFVsYgVLLOLo/9DugHUizv3dh3tHQ=";
+        package =
+          pkgs.niri.overrideAttrs rec {
+            src = pkgs.fetchFromGitHub {
+              owner = "willybarret";
+              repo = "niri";
+              rev = "dc0505f";
+              hash = "sha256-NmsIOdV1MW1GJ54rXOhPmD3DZJVP+c1qyim9nfWxREE=";
+            };
+            version = "26.04";
+            cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
+              pname = pkgs.niri.pname;
+              version = pkgs.niri.version;
+              src = src;
+              hash = "sha256-aNovCzrTtmqTO33YtZap47npdN73zXC1bap5q5dZvZk=";
+            };
           };
-        };
         v2-settings = true;
         imports = with self.nixosModules; [
           niriInput
